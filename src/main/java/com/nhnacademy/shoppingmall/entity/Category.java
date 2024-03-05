@@ -1,8 +1,10 @@
 package com.nhnacademy.shoppingmall.entity;
 
 import lombok.*;
-import org.hibernate.validator.constraints.Length;
-
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
@@ -15,6 +17,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
     Integer categoryId;
+  
     @Column(name = "category_name")
     @Length(min = 1, max = 20)
     String categoryName; //카테고리 이름
@@ -23,4 +26,5 @@ public class Category {
     public Category(String categoryName) {
         this.categoryName = categoryName;
     }
+
 }

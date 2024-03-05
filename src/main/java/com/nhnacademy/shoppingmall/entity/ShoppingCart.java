@@ -29,7 +29,8 @@ public class ShoppingCart {
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product; //상품번호
-
+    
+    @Builder
     public ShoppingCart(String cartId, LocalDateTime dateCreated, Integer quantity, Product product) {
         this.cartId = cartId;
         this.dateCreated = dateCreated;

@@ -1,6 +1,7 @@
 package com.nhnacademy.shoppingmall.entity;
 
 import lombok.*;
+
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -38,4 +39,5 @@ public class Address {
         this.deliveryRequest = deliveryRequest;
         this.user = user;
     }
+
 }
