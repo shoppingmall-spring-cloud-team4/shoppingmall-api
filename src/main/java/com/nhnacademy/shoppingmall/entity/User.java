@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Length(max = 50)
     @Column(name = "user_id")
     private String userId;

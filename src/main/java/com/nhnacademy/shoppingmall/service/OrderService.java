@@ -1,7 +1,5 @@
 package com.nhnacademy.shoppingmall.service;
 
-import com.nhnacademy.shoppingmall.domain.CategoryRequest;
-import com.nhnacademy.shoppingmall.domain.CategoryResponse;
 import com.nhnacademy.shoppingmall.domain.OrderRequest;
 import com.nhnacademy.shoppingmall.domain.OrderResponse;
 

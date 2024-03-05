@@ -41,7 +41,7 @@ public class OrderDetail {
         private Integer productId; //상품번호
     }
 
-
+    @Builder
     public OrderDetail(Order order, Product product, Integer quantity, Long unitCost) {
         this.order = order;
         this.product = product;
