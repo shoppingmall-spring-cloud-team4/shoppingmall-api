@@ -19,7 +19,7 @@ public class ShoppingCart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "record_id")
-    private int recordId;
+    private Integer recordId;
 
     @Column(name = "cart_id")
     @Length(max = 120)

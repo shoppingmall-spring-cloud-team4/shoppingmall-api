@@ -32,7 +32,7 @@ public class ProductCategory {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Pk implements Serializable {
-        private int categoryId;
-        private int productId;
+        private Integer categoryId;
+        private Integer productId;
     }
 }

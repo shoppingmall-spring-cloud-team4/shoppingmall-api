@@ -38,7 +38,7 @@ public class OrderDetail {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Pk implements Serializable {
-        private int orderId;
-        private int productId;
+        private Integer orderId;
+        private Integer productId;
     }
 }

@@ -19,9 +19,9 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_id")
-    private int reviewId;
+    private Integer reviewId;
 
-    private int rating;
+    private Integer rating;
 
     @Column(name = "review_date_created")
     private LocalDateTime reviewDateCreated;
