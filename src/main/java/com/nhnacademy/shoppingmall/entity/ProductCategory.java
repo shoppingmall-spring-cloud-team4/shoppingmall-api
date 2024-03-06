@@ -3,7 +3,6 @@ package com.nhnacademy.shoppingmall.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 @Entity

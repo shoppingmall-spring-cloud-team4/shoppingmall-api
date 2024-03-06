@@ -33,7 +33,8 @@ public class Address {
     private User user;
 
     @Builder
-    public Address(String zipcode, String addressDetail, String deliveryRequest, User user) {
+    public Address(Integer addressId, String zipcode, String addressDetail, String deliveryRequest, User user) {
+        this.addressId = addressId;
         this.zipcode = zipcode;
         this.addressDetail = addressDetail;
         this.deliveryRequest = deliveryRequest;

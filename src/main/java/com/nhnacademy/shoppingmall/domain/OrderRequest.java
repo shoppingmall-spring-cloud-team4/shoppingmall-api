@@ -8,5 +8,5 @@ import java.util.List;
 public class OrderRequest {
     private String userId;
     private Integer addressId;
-    private List<OrderProductDto> orderProducts;
+    private List<OrderedProductDto> orderProducts;
 }
