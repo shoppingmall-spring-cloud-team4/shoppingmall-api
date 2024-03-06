@@ -9,8 +9,7 @@ import java.io.Serializable;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "ProductCategory")
 public class ProductCategory {
 
@@ -32,7 +31,13 @@ public class ProductCategory {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Pk implements Serializable {
-        private Integer categoryId;
-        private Integer productId;
+        private Integer categoryId; // 카테고리 아이디
+        private Integer productId; // 상품번호
+    }
+
+    @Builder
+    public ProductCategory(Category category, Product product) {
+        this.category = category;
+        this.product = product;
     }
 }

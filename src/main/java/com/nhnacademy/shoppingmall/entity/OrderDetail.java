@@ -9,8 +9,7 @@ import java.io.Serializable;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "OrderDetails")
 public class OrderDetail {
 
@@ -27,18 +26,27 @@ public class OrderDetail {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    private int quantity;
+    private Integer quantity; // 수량
 
     @Column(name = "unit_cost")
     @Length(max = 15)
-    private Long unitCost;
+    private Long unitCost; // 가격
 
     @Embeddable
     @EqualsAndHashCode
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Pk implements Serializable {
-        private Integer orderId;
-        private Integer productId;
+        private Integer orderId; // 주문번호
+        private Integer productId; // 상품번호
     }
+
+    @Builder
+    public OrderDetail(Order order, Product product, Integer quantity, Long unitCost) {
+        this.order = order;
+        this.product = product;
+        this.quantity = quantity;
+        this.unitCost = unitCost;
+    }
+
 }
