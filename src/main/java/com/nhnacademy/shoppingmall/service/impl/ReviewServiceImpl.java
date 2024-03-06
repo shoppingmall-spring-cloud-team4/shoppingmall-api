@@ -32,9 +32,8 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public void createReview(ReviewRegisterDto reviewRegisterDto) {
-        Review review = new Review();
+        Review review = Review.builder().reviewDateCreated(LocalDateTime.now()).build();
         BeanUtils.copyProperties(reviewRegisterDto, review);
-        review.setReviewDateCreated(LocalDateTime.now());
 
         reviewRepository.save(review);
     }

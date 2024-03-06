@@ -24,10 +24,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public void createShoppingCart(ShoppingCartRegisterDto shoppingCartRegisterDto) {
-        ShoppingCart shoppingCart = new ShoppingCart();
-        BeanUtils.copyProperties(shoppingCartRegisterDto, shoppingCart);
-        shoppingCart.setDateCreated(LocalDateTime.now());
+        ShoppingCart shoppingCart = ShoppingCart.builder()
+                .dateCreated(LocalDateTime.now())
+                .build();
 
+        BeanUtils.copyProperties(shoppingCartRegisterDto, shoppingCart);
         shoppingCartRepository.save(shoppingCart);
     }
 

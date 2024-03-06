@@ -31,12 +31,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createUser(UserRegisterDto userRegisterDto) {
-        User user = new User();
-        BeanUtils.copyProperties(userRegisterDto, user);
-        user.setCreatedAt(LocalDateTime.now());
-        user.setUserPoint(1000000);
-        user.setUserAuth("user");
+        User user = User.builder()
+                .createdAt(LocalDateTime.now())
+                .userPoint(1000000)
+                .userAuth("user")
+                .build();
 
+        BeanUtils.copyProperties(userRegisterDto, user);
         userRepository.save(user);
     }
 

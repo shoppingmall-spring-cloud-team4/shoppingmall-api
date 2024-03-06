@@ -37,7 +37,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void createProduct(ProductRegisterDto productRegisterDto) {
-        Product product = new Product();
+        Product product = Product.builder().build();
         BeanUtils.copyProperties(productRegisterDto, product);
 
         productRepository.save(product);
