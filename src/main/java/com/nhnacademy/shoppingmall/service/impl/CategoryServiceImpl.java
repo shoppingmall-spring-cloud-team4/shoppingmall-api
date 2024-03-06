@@ -6,19 +6,18 @@ import com.nhnacademy.shoppingmall.entity.Category;
 import com.nhnacademy.shoppingmall.exception.CategoryNotFoundException;
 import com.nhnacademy.shoppingmall.repository.CategoryRepository;
 import com.nhnacademy.shoppingmall.service.CategoryService;
-import lombok.extern.slf4j.Slf4j;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Slf4j
+@AllArgsConstructor
+@Service
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
 
-    public CategoryServiceImpl(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-    }
 
     @Override
     public List<CategoryResponse> getAllCategories() {
