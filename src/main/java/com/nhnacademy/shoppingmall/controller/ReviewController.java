@@ -21,12 +21,9 @@ public class ReviewController {
         return ResponseEntity.ok().body(reviewService.getReviewsByProductId(productId));
     }
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<ReviewDto>> getReviewsByUserId(@PathVariable String userId) {
-        return ResponseEntity.ok().body(reviewService.getReviewsByUserId(userId));
-    }
 
-    @PostMapping()
+
+    @PostMapping
     public ResponseEntity<Void> createReview(@RequestBody ReviewRegisterDto reviewRegisterDto) {
         reviewService.createReview(reviewRegisterDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();

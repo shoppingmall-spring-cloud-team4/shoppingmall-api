@@ -1,8 +1,10 @@
 package com.nhnacademy.shoppingmall.controller;
 
 
+import com.nhnacademy.shoppingmall.domain.ReviewDto;
 import com.nhnacademy.shoppingmall.domain.UserDto;
 import com.nhnacademy.shoppingmall.domain.UserRegisterDto;
+import com.nhnacademy.shoppingmall.service.ReviewService;
 import com.nhnacademy.shoppingmall.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final ReviewService reviewService;
 
     @GetMapping
     public ResponseEntity<List<UserDto>> getAllUsers()
@@ -28,6 +31,12 @@ public class UserController {
     public ResponseEntity<Optional<UserDto>> getUser(@PathVariable("userId") String userId)
     {
         return ResponseEntity.ok().body(userService.getUserById(userId));
+    }
+
+    // User가 작성한 reviews
+    @GetMapping("/{userId}/review")
+    public ResponseEntity<List<ReviewDto>> getReviewsByUserId(@PathVariable String userId) {
+        return ResponseEntity.ok().body(reviewService.getReviewsByUserId(userId));
     }
 
     @PostMapping
