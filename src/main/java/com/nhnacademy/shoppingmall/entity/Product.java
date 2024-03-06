@@ -33,7 +33,7 @@ public class Product {
 
     @Column(name = "unit_cost")
     @Length(max = 15)
-    private long unitCost; //가격
+    private Long unitCost; //가격
 
     @Length(max = 300)
     private String description; //상품 설명
