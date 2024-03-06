@@ -2,7 +2,6 @@ package com.nhnacademy.shoppingmall.controller;
 
 import com.nhnacademy.shoppingmall.domain.ProductDto;
 import com.nhnacademy.shoppingmall.domain.ProductRegisterDto;
-import com.nhnacademy.shoppingmall.entity.Product;
 import com.nhnacademy.shoppingmall.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

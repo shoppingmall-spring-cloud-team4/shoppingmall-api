@@ -3,6 +3,11 @@ Accept: application/json
 
 ###
 
+GET http://localhost:8200/product/10
+Accept: application/json
+
+###
+
 POST http://localhost:8200/product
 Content-Type: application/json
 
@@ -17,18 +22,18 @@ Content-Type: application/json
 
 
 ###
-PUT http://localhost:8200/product/1
+PUT http://localhost:8200/product/11
 Content-Type: application/json
 
 {
-  "categoryId": 1,
+  "categoryId": 3,
   "modelNumber": "310-234",
   "modelName": "키보드",
   "productImage":"image.png",
-  "unitCost": 10000,
-  "description": "이것은 키보드입니다."
+  "unitCost": 3333,
+  "description": "이것은 할인된 키보드입니다.."
 }
 
 ###
 
-DELETE http://localhost:8200/product/2
+DELETE http://localhost:8200/product/11

@@ -2,7 +2,9 @@ package com.nhnacademy.shoppingmall.service.impl;
 
 import com.nhnacademy.shoppingmall.domain.ProductDto;
 import com.nhnacademy.shoppingmall.domain.ProductRegisterDto;
+import com.nhnacademy.shoppingmall.entity.Category;
 import com.nhnacademy.shoppingmall.entity.Product;
+import com.nhnacademy.shoppingmall.repository.CategoryRepository;
 import com.nhnacademy.shoppingmall.repository.ProductRepository;
 import com.nhnacademy.shoppingmall.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,7 @@ import java.util.Optional;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
 
     @Override
     public List<ProductDto> getProducts() {
@@ -44,16 +47,24 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void updateProduct(ProductRegisterDto productRegisterDto, Integer productId) {
-        Product existedProduct = productRepository.findById(productId).orElse(null);
+        Category category = categoryRepository.findById(productRegisterDto.getCategoryId()).orElse(null);
 
-        if (existedProduct != null) {
-            BeanUtils.copyProperties(productRegisterDto, existedProduct);
-            productRepository.save(existedProduct);
+        if (productRepository.existsById(productId) && category != null) {
+            Product product = Product.builder()
+                            .category(category)
+                            .modelName(productRegisterDto.getModelName())
+                            .modelNumber(productRegisterDto.getModelNumber())
+                            .productImage(productRegisterDto.getProductImage())
+                            .description(productRegisterDto.getDescription())
+                            .build();
+
+            productRepository.save(product);
         }
     }
 
     @Override
     public void deleteProduct(Integer productId) {
-        productRepository.deleteById(productId);
+        if(productRepository.existsById(productId))
+            productRepository.deleteById(productId);
     }
 }
