@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor(access= AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "Products")
 public class Product {
     @Id
@@ -18,28 +18,28 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    private Category category; //카테고리 아이디
+    private Category category; // 카테고리 아이디
 
     @Column(name = "model_number")
     @Length(max = 10)
-    private String modelNumber; //모델번호
+    private String modelNumber; // 모델번호
 
     @Column(name = "model_name")
     @Length(max = 100)
-    private String modelName; //모델이름
+    private String modelName; // 모델이름
 
     @Column(name = "product_image")
-    private String productImage; //상품 이미지
+    private String productImage; // 상품 이미지
 
     @Column(name = "unit_cost")
-    @Length(max = 15)
-    private Long unitCost; //가격
+    private Long unitCost; // 가격
 
     @Length(max = 300)
-    private String description; //상품 설명
+    private String description; // 상품 설명
 
     @Builder
-    public Product(Category category, String modelNumber, String modelName, String productImage, long unitCost, String description) {
+    public Product(Category category, String modelNumber, String modelName, String productImage, Long unitCost,
+            String description) {
         this.category = category;
         this.modelNumber = modelNumber;
         this.modelName = modelName;

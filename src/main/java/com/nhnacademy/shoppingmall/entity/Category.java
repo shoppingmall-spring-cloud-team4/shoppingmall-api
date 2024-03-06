@@ -1,6 +1,10 @@
 package com.nhnacademy.shoppingmall.entity;
 
 import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -8,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor(access= AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "Categories")
 public class Category {
     @Id
@@ -18,10 +22,11 @@ public class Category {
 
     @Column(name = "category_name")
     @Length(min = 1, max = 20)
-    String categoryName; //카테고리 이름
+    String categoryName; // 카테고리 이름
 
     @Builder
     public Category(String categoryName) {
         this.categoryName = categoryName;
     }
+
 }

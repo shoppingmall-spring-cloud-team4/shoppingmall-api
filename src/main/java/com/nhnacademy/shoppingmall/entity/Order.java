@@ -1,8 +1,6 @@
 package com.nhnacademy.shoppingmall.entity;
 
-
 import lombok.*;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
