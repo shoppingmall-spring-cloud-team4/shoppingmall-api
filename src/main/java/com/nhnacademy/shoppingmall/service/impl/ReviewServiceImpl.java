@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-
 @RequiredArgsConstructor
 public class ReviewServiceImpl implements ReviewService {
 
@@ -26,7 +25,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<ReviewDto> getReviewsByUserId(Integer userId) {
+    public List<ReviewDto> getReviewsByUserId(String userId) {
         return reviewRepository.getAllByUser_UserId(userId);
     }
 

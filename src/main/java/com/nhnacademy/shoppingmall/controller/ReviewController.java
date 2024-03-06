@@ -22,7 +22,7 @@ public class ReviewController {
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<ReviewDto>> getReviewsByUserId(@PathVariable Integer userId) {
+    public ResponseEntity<List<ReviewDto>> getReviewsByUserId(@PathVariable String userId) {
         return ResponseEntity.ok().body(reviewService.getReviewsByUserId(userId));
     }
 

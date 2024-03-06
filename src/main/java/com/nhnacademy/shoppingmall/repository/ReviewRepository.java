@@ -8,6 +8,10 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review, Integer> {
-    List<ReviewDto> getAllByUser_UserId(Integer userId); // 특정 User가 작성한 모든 reviews
-    List<ReviewDto> getAllByProduct_ProductId(Integer productId); // 특정 product에 작성된 모든 reviews
+
+    @Query("SELECT new com.nhnacademy.shoppingmall.domain.ReviewDto(r.rating, r.reviewDateCreated, r.comment, r.user.userId) FROM Review r WHERE r.user.userId = :userId")
+    List<ReviewDto> getAllByUser_UserId(String userId);
+
+    @Query("SELECT new com.nhnacademy.shoppingmall.domain.ReviewDto(r.rating, r.reviewDateCreated, r.comment, r.user.userId) FROM Review r WHERE r.product.productId = :productId")
+    List<ReviewDto> getAllByProduct_ProductId(Integer productId);
 }
