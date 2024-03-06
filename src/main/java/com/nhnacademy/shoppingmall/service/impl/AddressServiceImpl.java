@@ -26,7 +26,7 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public AddressResponse getAddress(Integer addressId, String userId) throws AddressNotFoundException {
+    public AddressResponse getAddress(Integer addressId, String userId){
         return addressRepository.findAddressByAddressIdAndUser_UserId(addressId, userId)
                 .orElseThrow(() -> new AddressNotFoundException(addressId));
     }

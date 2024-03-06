@@ -21,7 +21,8 @@ public class Category {
     String categoryName; //카테고리 이름
 
     @Builder
-    public Category(String categoryName) {
+    public Category(Integer categoryId, String categoryName) {
+        this.categoryId = categoryId;
         this.categoryName = categoryName;
     }
 }

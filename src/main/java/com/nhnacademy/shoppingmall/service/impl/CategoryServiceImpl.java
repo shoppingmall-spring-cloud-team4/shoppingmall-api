@@ -6,11 +6,13 @@ import com.nhnacademy.shoppingmall.entity.Category;
 import com.nhnacademy.shoppingmall.exception.CategoryNotFoundException;
 import com.nhnacademy.shoppingmall.repository.CategoryRepository;
 import com.nhnacademy.shoppingmall.service.CategoryService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
 
@@ -24,8 +26,9 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Optional<CategoryResponse> getCategory(String categoryName) {
-        return categoryRepository.findByCategoryName(categoryName);
+    public CategoryResponse getCategory(String categoryName){
+        return categoryRepository.findByCategoryName(categoryName)
+                .orElseThrow(() -> new CategoryNotFoundException(null));
     }
 
     @Override
@@ -39,15 +42,18 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void updateCategory(Integer categoryId, CategoryRequest categoryRequest) throws CategoryNotFoundException {
+    public void updateCategory(Integer categoryId, CategoryRequest categoryRequest){
         Optional<Category> optionalCategory = categoryRepository.findById(categoryId);
 
         if(optionalCategory.isPresent()){
             Category category = optionalCategory.get();
 
-            BeanUtils.copyProperties(categoryRequest, category);
+            Category updatedCategory = Category.builder()
+                    .categoryId(categoryId)
+                    .categoryName(categoryRequest.getCategoryName())
+                    .build();
 
-            categoryRepository.save(category);
+            categoryRepository.save(updatedCategory);
         } else {
             throw new CategoryNotFoundException(categoryId);
         }

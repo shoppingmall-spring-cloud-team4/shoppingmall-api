@@ -12,7 +12,6 @@ import com.nhnacademy.shoppingmall.service.OrderService;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
@@ -51,7 +50,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Optional<OrderResponse> getOrder(Integer orderId) throws OrderNotFoundException {
+    public OrderResponse getOrder(Integer orderId){
 
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new OrderNotFoundException(orderId));
@@ -64,11 +63,11 @@ public class OrderServiceImpl implements OrderService {
         }
 
         OrderResponse orderResponse = new OrderResponse(order.getOrderId(), order.getOrderDate(), order.getShipDate(), order.getUser().getUserId(), order.getAddress().getZipcode(), order.getAddress().getAddressDetail(), orderedProducts);
-        return Optional.of(orderResponse);
+        return orderResponse;
     }
 
     @Override
-    public void createOrder(OrderRequest orderRequest) throws ProductNotFoundException {
+    public void createOrder(OrderRequest orderRequest){
         User user = userRepository.findById(orderRequest.getUserId()).orElse(null);
         Address address = addressRepository.findById(orderRequest.getAddressId()).orElse(null);
 
@@ -86,8 +85,7 @@ public class OrderServiceImpl implements OrderService {
         List<OrderDetail> orderDetails = new ArrayList<>();
 
         for (OrderedProductDto productDto : orderRequest.getOrderProducts()) {
-            Product product = productRepository.findById(productDto.getProductId())
-                    .orElseThrow(() -> new ProductNotFoundException(productDto.getProductId()));
+            Product product = productRepository.findById(productDto.getProductId()).orElse(null);
 
             OrderDetail orderDetail = OrderDetail.builder()
                         .order(order)
@@ -104,7 +102,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void deleteOrder(Integer orderId) throws OrderNotFoundException {
+    public void deleteOrder(Integer orderId) {
 
         if(orderRepository.findById(orderId).isPresent()){
             orderRepository.deleteById(orderId);
