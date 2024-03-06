@@ -39,5 +39,4 @@ public class Address {
         this.deliveryRequest = deliveryRequest;
         this.user = user;
     }
-
 }

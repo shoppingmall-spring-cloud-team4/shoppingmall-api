@@ -11,11 +11,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access=AccessLevel.PROTECTED)
 @Table(name = "Users")
 public class User {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Length(max = 50)
     @Column(name = "user_id")
+    @Id
     private String userId;
 
     @Column(name = "user_name")
