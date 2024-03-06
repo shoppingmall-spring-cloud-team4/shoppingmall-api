@@ -32,12 +32,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public void createUser(UserRegisterDto userRegisterDto) {
         User user = User.builder()
+                .userId(userRegisterDto.getUserId())
+                .userName(userRegisterDto.getUserName())
+                .userPassword(userRegisterDto.getUserPassword())
+                .userBirth(userRegisterDto.getUserBirth())
                 .createdAt(LocalDateTime.now())
                 .userPoint(1000000)
                 .userAuth("user")
                 .build();
 
-        BeanUtils.copyProperties(userRegisterDto, user);
         userRepository.save(user);
     }
 
@@ -46,8 +49,17 @@ public class UserServiceImpl implements UserService {
         User existedUser = userRepository.findById(userId).orElse(null);
 
         if (existedUser != null) {
-            BeanUtils.copyProperties(userRegisterDto, existedUser);
-            userRepository.save(existedUser);
+            User user = User.builder()
+                    .userId(userRegisterDto.getUserId())
+                    .userName(userRegisterDto.getUserName())
+                    .userPassword(userRegisterDto.getUserPassword())
+                    .userBirth(userRegisterDto.getUserBirth())
+                    .createdAt(existedUser.getCreatedAt())
+                    .userPoint(existedUser.getUserPoint())
+                    .userAuth(existedUser.getUserAuth())
+                    .build();
+
+            userRepository.save(user);
         }
     }
 
