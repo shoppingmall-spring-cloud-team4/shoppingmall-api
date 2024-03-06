@@ -32,14 +32,13 @@ public class Product {
     private String productImage; //상품 이미지
 
     @Column(name = "unit_cost")
-    @Length(max = 15)
-    private long unitCost; //가격
+    private Long unitCost; //가격
 
     @Length(max = 300)
     private String description; //상품 설명
 
     @Builder
-    public Product(Category category, String modelNumber, String modelName, String productImage, long unitCost, String description) {
+    public Product(Category category, String modelNumber, String modelName, String productImage, Long unitCost, String description) {
         this.category = category;
         this.modelNumber = modelNumber;
         this.modelName = modelName;

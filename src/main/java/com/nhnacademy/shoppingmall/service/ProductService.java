@@ -2,6 +2,7 @@ package com.nhnacademy.shoppingmall.service;
 
 import com.nhnacademy.shoppingmall.domain.ProductDto;
 import com.nhnacademy.shoppingmall.domain.ProductRegisterDto;
+import com.nhnacademy.shoppingmall.entity.Product;
 
 import java.util.List;
 import java.util.Optional;

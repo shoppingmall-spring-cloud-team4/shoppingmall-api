@@ -5,6 +5,6 @@ public class ProductRegisterDto {
     private String modelNumber;
     private String modelName;
     private String productImage;
-    private long unitCost;
+    private Long unitCost;
     private String description;
 }
