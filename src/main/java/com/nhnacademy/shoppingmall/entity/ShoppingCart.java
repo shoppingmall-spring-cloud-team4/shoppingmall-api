@@ -2,6 +2,7 @@ package com.nhnacademy.shoppingmall.entity;
 
 import lombok.*;
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "ShoppingCart")
 public class ShoppingCart {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "record_id")
@@ -29,7 +31,8 @@ public class ShoppingCart {
     private Product product; // 상품번호
 
     @Builder
-    public ShoppingCart(User user, LocalDateTime dateCreated, Integer quantity, Product product) {
+    public ShoppingCart(Integer recordId, User user, LocalDateTime dateCreated, Integer quantity, Product product) {
+        this.recordId = recordId;
         this.user = user;
         this.dateCreated = dateCreated;
         this.quantity = quantity;
