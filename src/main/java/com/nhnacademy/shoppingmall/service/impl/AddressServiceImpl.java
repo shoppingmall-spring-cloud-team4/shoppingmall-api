@@ -7,16 +7,18 @@ import com.nhnacademy.shoppingmall.entity.User;
 import com.nhnacademy.shoppingmall.exception.AddressNotFoundException;
 import com.nhnacademy.shoppingmall.repository.AddressRepository;
 import com.nhnacademy.shoppingmall.service.AddressService;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.beans.BeanUtils;
 
 import java.util.List;
 import java.util.Optional;
 
-@AllArgsConstructor
-@Service
 public class AddressServiceImpl implements AddressService {
     private final AddressRepository addressRepository;
+
+    public AddressServiceImpl(AddressRepository addressRepository) {
+        this.addressRepository = addressRepository;
+    }
+
 
     @Override
     public List<AddressResponse> getAllAddresses(String userId) {

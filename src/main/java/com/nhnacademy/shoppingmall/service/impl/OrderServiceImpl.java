@@ -8,21 +8,25 @@ import com.nhnacademy.shoppingmall.exception.OrderNotFoundException;
 import com.nhnacademy.shoppingmall.exception.ProductNotFoundException;
 import com.nhnacademy.shoppingmall.repository.*;
 import com.nhnacademy.shoppingmall.service.OrderService;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@AllArgsConstructor
-@Service
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final OrderDetailsRepository orderDetailsRepository;
     private final UserRepository userRepository;
     private final AddressRepository addressRepository;
     private final ProductRepository productRepository;
+
+    public OrderServiceImpl(OrderRepository orderRepository, OrderDetailsRepository orderDetailsRepository, UserRepository userRepository, AddressRepository addressRepository, ProductRepository productRepository) {
+        this.orderRepository = orderRepository;
+        this.orderDetailsRepository = orderDetailsRepository;
+        this.userRepository = userRepository;
+        this.addressRepository = addressRepository;
+        this.productRepository = productRepository;
+    }
 
     @Override
     public List<OrderResponse> getAllOrders(String userId) {
@@ -81,8 +85,7 @@ public class OrderServiceImpl implements OrderService {
         List<OrderDetail> orderDetails = new ArrayList<>();
 
         for (OrderedProductDto productDto : orderRequest.getOrderProducts()) {
-            Product product = productRepository.findById(productDto.getProductId())
-                    .orElseThrow(() -> new ProductNotFoundException(productDto.getProductId()));
+            Product product = productRepository.findById(productDto.getProductId()).orElse(null);
 
             OrderDetail orderDetail = OrderDetail.builder()
                         .order(order)
