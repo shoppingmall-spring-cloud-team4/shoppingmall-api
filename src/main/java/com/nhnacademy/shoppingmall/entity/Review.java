@@ -35,7 +35,8 @@ public class Review {
     private Product product; // 구매 상품번호
 
     @Builder
-    public Review(Integer rating, LocalDateTime reviewDateCreated, String comment, User user, Product product) {
+    public Review(Integer reviewId, Integer rating, LocalDateTime reviewDateCreated, String comment, User user, Product product) {
+        this.reviewId = reviewId;
         this.rating = rating;
         this.reviewDateCreated = reviewDateCreated;
         this.comment = comment;

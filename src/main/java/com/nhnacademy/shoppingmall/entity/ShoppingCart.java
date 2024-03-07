@@ -1,8 +1,6 @@
 package com.nhnacademy.shoppingmall.entity;
 
 import lombok.*;
-import org.hibernate.validator.constraints.Length;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -17,9 +15,9 @@ public class ShoppingCart {
     @Column(name = "record_id")
     private Integer recordId;
 
-    @Column(name = "cart_id")
-    @Length(max = 120)
-    private String cartId; // 장바구니 아이디
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(name = "date_created")
     private LocalDateTime dateCreated; // 생성일
@@ -31,8 +29,8 @@ public class ShoppingCart {
     private Product product; // 상품번호
 
     @Builder
-    public ShoppingCart(String cartId, LocalDateTime dateCreated, Integer quantity, Product product) {
-        this.cartId = cartId;
+    public ShoppingCart(User user, LocalDateTime dateCreated, Integer quantity, Product product) {
+        this.user = user;
         this.dateCreated = dateCreated;
         this.quantity = quantity;
         this.product = product;

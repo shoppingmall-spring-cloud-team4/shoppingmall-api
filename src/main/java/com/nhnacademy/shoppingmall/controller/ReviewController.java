@@ -2,6 +2,7 @@ package com.nhnacademy.shoppingmall.controller;
 
 import com.nhnacademy.shoppingmall.domain.ReviewDto;
 import com.nhnacademy.shoppingmall.domain.ReviewRegisterDto;
+import com.nhnacademy.shoppingmall.domain.ReviewUpdateDto;
 import com.nhnacademy.shoppingmall.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,8 +30,8 @@ public class ReviewController {
     }
 
     @PutMapping("/{reviewId}")
-    public ResponseEntity<Void> updateReview(@RequestBody ReviewRegisterDto reviewRegisterDto, @PathVariable Integer reviewId) {
-        reviewService.updateReview(reviewRegisterDto, reviewId);
+    public ResponseEntity<Void> updateReview(@RequestBody ReviewUpdateDto reviewUpdateDto, @PathVariable Integer reviewId) {
+        reviewService.updateReview(reviewUpdateDto, reviewId);
         return ResponseEntity.ok().build();
     }
 
