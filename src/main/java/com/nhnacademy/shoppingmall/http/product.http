@@ -22,6 +22,7 @@ Content-Type: application/json
 
 
 ###
+# 카테고리 Controller가 존재하지 않아 작동하지 않음!!
 PUT http://localhost:8200/product/11
 Content-Type: application/json
 
