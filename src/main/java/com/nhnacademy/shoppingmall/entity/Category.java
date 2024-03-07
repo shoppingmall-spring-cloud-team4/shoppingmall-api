@@ -22,11 +22,8 @@ public class Category {
 
     @Column(name = "category_name")
     @Length(min = 1, max = 20)
-<<<<<<< HEAD
     private String categoryName; //카테고리 이름
-=======
-    String categoryName; // 카테고리 이름
->>>>>>> fbc4974287ff06e5a72b4bba526dd06e8be4e9d9
+
 
     @Builder
     public Category(Integer categoryId, String categoryName) {

@@ -32,11 +32,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void createCategory(CategoryRequest categoryRequest) {
         Category category = Category.builder()
+                .categoryName(categoryRequest.getCategoryName())
                 .build();
-        BeanUtils.copyProperties(categoryRequest, category);
 
         categoryRepository.save(category);
-
     }
 
     @Override

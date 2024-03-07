@@ -27,12 +27,7 @@ public class OrderDetail {
     private Integer quantity; // 수량
 
     @Column(name = "unit_cost")
-<<<<<<< HEAD
     private Long unitCost; //가격
-=======
-    @Length(max = 15)
-    private Long unitCost; // 가격
->>>>>>> fbc4974287ff06e5a72b4bba526dd06e8be4e9d9
 
     @Embeddable
     @EqualsAndHashCode

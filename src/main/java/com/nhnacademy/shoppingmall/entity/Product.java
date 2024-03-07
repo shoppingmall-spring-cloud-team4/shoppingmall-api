@@ -32,11 +32,7 @@ public class Product {
     private String productImage; // 상품 이미지
 
     @Column(name = "unit_cost")
-<<<<<<< HEAD
     private Long unitCost; //가격
-=======
-    private Long unitCost; // 가격
->>>>>>> fbc4974287ff06e5a72b4bba526dd06e8be4e9d9
 
     @Length(max = 300)
     private String description; // 상품 설명
