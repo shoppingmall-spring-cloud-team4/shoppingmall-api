@@ -18,8 +18,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private final ShoppingCartRepository shoppingCartRepository;
 
     @Override
-    public List<ShoppingCartDto> getAllShoppingList(Integer recordId) {
-        return shoppingCartRepository.getAllByRecordId(recordId);
+    public List<ShoppingCartDto> getAllShoppingList() {
+        return shoppingCartRepository.getAllByUser_UserId();
     }
 
     @Override

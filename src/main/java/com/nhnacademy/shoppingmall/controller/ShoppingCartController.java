@@ -16,9 +16,9 @@ import java.util.List;
 public class ShoppingCartController {
     private final ShoppingCartService shoppingCartService;
 
-    @GetMapping("/{recordId}")
-    public ResponseEntity<List<ShoppingCartDto>> getAllShoppingList(@PathVariable Integer recordId) {
-        return ResponseEntity.ok().body(shoppingCartService.getAllShoppingList(recordId));
+    @GetMapping
+    public ResponseEntity<List<ShoppingCartDto>> getAllShoppingList() {
+        return ResponseEntity.ok().body(shoppingCartService.getAllShoppingList());
     }
 
     @PostMapping

@@ -6,7 +6,7 @@ import com.nhnacademy.shoppingmall.domain.ShoppingCartRegisterDto;
 import java.util.List;
 
 public interface ShoppingCartService {
-    List<ShoppingCartDto> getAllShoppingList(Integer recordId);
+    List<ShoppingCartDto> getAllShoppingList();
 
     void createShoppingCart(ShoppingCartRegisterDto shoppingCartRegisterDto);
 
