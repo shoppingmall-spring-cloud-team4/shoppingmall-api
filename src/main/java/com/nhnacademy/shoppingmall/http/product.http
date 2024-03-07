@@ -3,7 +3,7 @@ Accept: application/json
 
 ###
 
-GET http://localhost:8200/product/10
+GET http://localhost:8200/product/2
 Accept: application/json
 
 ###
@@ -13,28 +13,29 @@ Content-Type: application/json
 
 {
   "categoryId": 1,
-  "modelNumber": "310-234",
-  "modelName": "키보드",
-  "productImage":"image.png",
-  "unitCost": 10000,
-  "description": "이것은 키보드입니다."
+  "modelNumber": "PPAP",
+  "modelName": "파인애플",
+  "productImage":"Pineapple.png",
+  "unitCost": 18000,
+  "description": "이것은 파인애플입니다."
 }
 
 
 ###
-# 카테고리 Controller가 존재하지 않아 작동하지 않음!!
-PUT http://localhost:8200/product/11
+
+PUT http://localhost:8200/product/6
 Content-Type: application/json
 
 {
-  "categoryId": 3,
-  "modelNumber": "310-234",
-  "modelName": "키보드",
-  "productImage":"image.png",
-  "unitCost": 3333,
-  "description": "이것은 할인된 키보드입니다.."
+  "productId": 6,
+  "categoryId": 1,
+  "modelNumber": "PPAP",
+  "modelName": "파인애플",
+  "productImage":"Pineapple.png",
+  "unitCost": 1800,
+  "description": "파인애플 가격이 떡락했습니다 ㅠㅠ.."
 }
 
 ###
 
-DELETE http://localhost:8200/product/11
+DELETE http://localhost:8200/product/5

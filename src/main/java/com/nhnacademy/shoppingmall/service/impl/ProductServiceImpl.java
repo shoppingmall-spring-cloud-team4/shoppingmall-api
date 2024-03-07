@@ -35,7 +35,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<ProductDto> getProductById(Integer productId) {
+    public Optional<ProductDto> getProductById( Integer productId) {
         if(!productRepository.existsById(productId))
             throw new ProductNotFoundException(productId);
 
@@ -60,10 +60,12 @@ public class ProductServiceImpl implements ProductService {
 
         if (productRepository.existsById(productId)) {
             Product product = Product.builder()
+                            .productId(productRegisterDto.getProductId())
                             .category(category)
                             .modelName(productRegisterDto.getModelName())
                             .modelNumber(productRegisterDto.getModelNumber())
                             .productImage(productRegisterDto.getProductImage())
+                            .unitCost(productRegisterDto.getUnitCost())
                             .description(productRegisterDto.getDescription())
                             .build();
 

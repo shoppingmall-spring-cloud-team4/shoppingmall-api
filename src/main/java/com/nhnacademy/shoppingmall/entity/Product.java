@@ -38,8 +38,9 @@ public class Product {
     private String description; // 상품 설명
 
     @Builder
-    public Product(Category category, String modelNumber, String modelName, String productImage, Long unitCost,
+    public Product(Integer productId, Category category, String modelNumber, String modelName, String productImage, Long unitCost,
             String description) {
+        this.productId = productId;
         this.category = category;
         this.modelNumber = modelNumber;
         this.modelName = modelName;
