@@ -32,7 +32,6 @@ public class Product {
     private String productImage; //상품 이미지
 
     @Column(name = "unit_cost")
-    @Length(max = 15)
     private Long unitCost; //가격
 
     @Length(max = 300)

@@ -1,0 +1,33 @@
+### 모든 주문 조회
+GET localhost:8200/api/order
+X-USER-ID: aaa
+
+
+### 특정 주문 조회
+GET localhost:8200/api/order/2
+
+
+### 주문 생성
+POST localhost:8200/api/order
+Content-Type: application/json
+
+{
+  "userId": "aaa",
+  "addressId": 1,
+  "orderProducts": [
+    {
+      "productId": 1,
+      "quantity": 2,
+      "unitCost": 10000
+    },
+    {
+      "productId": 2,
+      "quantity": 5,
+      "unitCost": 20000
+    }
+  ]
+}
+
+
+### 특정 주문 삭제
+DELETE localhost:8200/api/order/13

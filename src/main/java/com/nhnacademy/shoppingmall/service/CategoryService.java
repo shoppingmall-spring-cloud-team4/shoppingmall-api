@@ -3,21 +3,18 @@ package com.nhnacademy.shoppingmall.service;
 import com.nhnacademy.shoppingmall.domain.CategoryRequest;
 import com.nhnacademy.shoppingmall.domain.CategoryResponse;
 import com.nhnacademy.shoppingmall.exception.CategoryNotFoundException;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
-@Service
 public interface CategoryService {
 
     List<CategoryResponse> getAllCategories();
 
-    CategoryResponse getCategory(String CategoryName);
+    CategoryResponse getCategory(String categoryName);
 
     void createCategory(CategoryRequest categoryRequest);
 
-    void updateCategory(Integer CategoryId, CategoryRequest categoryRequest);
+    void updateCategory(Integer categoryId, CategoryRequest categoryRequest);
 
     void deleteCategory(Integer categoryId) throws CategoryNotFoundException;
 }
