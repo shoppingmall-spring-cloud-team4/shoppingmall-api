@@ -1,6 +1,7 @@
 package com.nhnacademy.shoppingmall.entity;
 
 import lombok.*;
+
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;

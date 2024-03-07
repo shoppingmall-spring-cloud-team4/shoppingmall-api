@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor(access= AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "ShoppingCart")
 public class ShoppingCart {
     @Id
@@ -19,16 +19,16 @@ public class ShoppingCart {
 
     @Column(name = "cart_id")
     @Length(max = 120)
-    private String cartId; //장바구니 아이디
+    private String cartId; // 장바구니 아이디
 
     @Column(name = "date_created")
-    private LocalDateTime dateCreated; //생성일
+    private LocalDateTime dateCreated; // 생성일
 
-    private Integer quantity; //수량
+    private Integer quantity; // 수량
 
     @ManyToOne
     @JoinColumn(name = "product_id")
-    private Product product; //상품번호
+    private Product product; // 상품번호
 
     @Builder
     public ShoppingCart(String cartId, LocalDateTime dateCreated, Integer quantity, Product product) {

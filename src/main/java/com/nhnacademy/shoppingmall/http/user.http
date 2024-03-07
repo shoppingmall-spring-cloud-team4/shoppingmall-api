@@ -1,0 +1,36 @@
+GET http://localhost:8200/user
+Accept: application/json
+
+###
+
+GET http://localhost:8200/user/jjunho50
+Accept: application/json
+
+###
+
+
+POST http://localhost:8200/user
+Content-Type: application/json
+
+{
+  "userId": "jjunho50",
+  "userName": "정준호",
+  "userPassword": "123",
+  "userBirth": "19991102"
+}
+
+
+###
+PUT http://localhost:8200/user/jjunho50
+Content-Type: application/json
+
+{
+  "userId": "jjunho50",
+  "userName": "정준호",
+  "userPassword": "123",
+  "userBirth": "19999999"
+}
+
+###
+
+DELETE http://localhost:8200/user/jjunho50
