@@ -1,1 +1,4 @@
-GET http://localhost:8200//user/jjunho50/shoppingCart
+GET http://localhost:8200/user/jjunho50/shoppingCart
+Accept: application/json
+
+###

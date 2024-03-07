@@ -39,15 +39,15 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public void createReview(ReviewRegisterDto reviewRegisterDto) {
+    public void createReview(ReviewRegisterDto reviewRegisterDto, Integer productId) {
         User user = userRepository.findById(reviewRegisterDto.getUserId()).orElse(null);
-        Product product = productRepository.findById(reviewRegisterDto.getProductId()).orElse(null);
+        Product product = productRepository.findById(productId).orElse(null);
 
         if(user == null)
             throw new UserNotFoundException(reviewRegisterDto.getUserId());
 
         if(product == null)
-            throw new ProductNotFoundException(reviewRegisterDto.getProductId());
+            throw new ProductNotFoundException(productId);
 
         Review review = Review.builder()
                 .reviewDateCreated(LocalDateTime.now())

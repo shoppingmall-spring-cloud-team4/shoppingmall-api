@@ -17,15 +17,16 @@ import java.util.List;
 public class ReviewController {
     private final ReviewService reviewService;
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<ReviewDto>> getReviewsByProductId(@PathVariable Integer productId) {
         return ResponseEntity.ok().body(reviewService.getReviewsByProductId(productId));
     }
 
 
+    // userId는 Gateway에서 session으로 받아서 처리하면 좋을듯
     @PostMapping
-    public ResponseEntity<Void> createReview(@RequestBody ReviewRegisterDto reviewRegisterDto) {
-        reviewService.createReview(reviewRegisterDto);
+    public ResponseEntity<Void> createReview(@RequestBody ReviewRegisterDto reviewRegisterDto, @PathVariable("productId") Integer productId) {
+        reviewService.createReview(reviewRegisterDto, productId);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 

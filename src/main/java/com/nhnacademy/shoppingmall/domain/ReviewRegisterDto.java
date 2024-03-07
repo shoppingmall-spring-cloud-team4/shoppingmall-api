@@ -7,8 +7,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class ReviewRegisterDto {
+    private String userId;
     private Integer rating;
     private String comment;
-    private String userId;
-    private Integer productId;
 }
