@@ -7,29 +7,23 @@ import com.nhnacademy.shoppingmall.domain.OrderedProductDto;
 import com.nhnacademy.shoppingmall.service.OrderService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-
-import javax.transaction.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Transactional
-@SpringBootTest
-@AutoConfigureMockMvc
-class OrderControllerTest {
+@WebMvcTest(OrderController.class)
+class OrderControllerUnitTest {
     @Autowired
     MockMvc mockMvc;
 
