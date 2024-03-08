@@ -1,8 +1,6 @@
 package com.nhnacademy.shoppingmall.entity;
 
 import lombok.*;
-import org.hibernate.validator.constraints.Length;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -29,8 +27,7 @@ public class OrderDetail {
     private Integer quantity; // 수량
 
     @Column(name = "unit_cost")
-    @Length(max = 15)
-    private Long unitCost; // 가격
+    private Long unitCost; //가격
 
     @Embeddable
     @EqualsAndHashCode
@@ -42,11 +39,12 @@ public class OrderDetail {
     }
 
     @Builder
-    public OrderDetail(Order order, Product product, Integer quantity, Long unitCost) {
+    public OrderDetail(Order order, Product product, Integer quantity, Long unitCost, Pk pk) {
         this.order = order;
         this.product = product;
         this.quantity = quantity;
         this.unitCost = unitCost;
+        this.pk = pk;
     }
 
 }

@@ -18,14 +18,16 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
-    Integer categoryId;
+    private Integer categoryId;
 
     @Column(name = "category_name")
     @Length(min = 1, max = 20)
-    String categoryName; // 카테고리 이름
+    private String categoryName; //카테고리 이름
+
 
     @Builder
-    public Category(String categoryName) {
+    public Category(Integer categoryId, String categoryName) {
+        this.categoryId = categoryId;
         this.categoryName = categoryName;
     }
 

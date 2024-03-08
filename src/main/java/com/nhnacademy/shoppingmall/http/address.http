@@ -1,0 +1,36 @@
+### 모든 주소 조회
+GET localhost:8200/api/address
+X-USER-ID: aaa
+
+
+### 특정 주소 조회
+GET localhost:8200/api/address/1
+X-USER-ID: aaa
+
+
+### 주소 생성
+POST localhost:8200/api/address
+X-USER-ID: aaa
+Content-Type: application/json
+
+{
+  "zipcode": "12121",
+  "addressDetail": "a빌딩",
+  "deliveryRequest": "문 앞"
+}
+
+
+### 특정 주소 수정
+PUT localhost:8200/api/address/5
+X-USER-ID: aaa
+Content-Type: application/json
+
+{
+  "zipcode": "12121",
+  "addressDetail": "b빌딩",
+  "deliveryRequest": "벨 x"
+}
+
+
+### 특정 주소 삭제
+DELETE localhost:8200/api/address/5
