@@ -1,9 +1,9 @@
-GET http://localhost:8200/product/2/review
+GET http://localhost:8200/api/product/2/review
 Accept: application/json
 
 ###
 
-POST http://localhost:8200/product/2/review/
+POST http://localhost:8200/api/product/2/review/
 Content-Type: application/json
 
 {
@@ -16,7 +16,7 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:8200/product/2/review/4
+PUT http://localhost:8200/api/product/2/review/4
 Content-Type: application/json
 
 {
@@ -27,4 +27,4 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:8200/product/1/review/2
+DELETE http://localhost:8200/api/product/1/review/2

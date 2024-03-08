@@ -8,11 +8,11 @@ Accept: application/json
 
 ###
 
-GET http://localhost:8200/product/
+GET http://localhost:8200/api/product/
 
 ###
 
-POST http://localhost:8200/product
+POST http://localhost:8200/api/product
 Content-Type: application/json
 
 {
@@ -27,7 +27,7 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:8200/product/1
+PUT http://localhost:8200/api/product/1
 Content-Type: application/json
 
 {
@@ -41,4 +41,4 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:8200/product/5
+DELETE http://localhost:8200/api/product/5
