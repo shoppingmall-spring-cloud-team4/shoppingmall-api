@@ -1,3 +1,5 @@
+# 전부 정상작동함 ㅎ
+
 GET http://localhost:8200/user
 Accept: application/json
 
@@ -8,6 +10,10 @@ Accept: application/json
 
 ###
 
+GET http://localhost:8200/user/jjunho50/review
+Accept: application/json
+
+###
 
 POST http://localhost:8200/user
 Content-Type: application/json

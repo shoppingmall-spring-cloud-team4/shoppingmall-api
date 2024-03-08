@@ -2,6 +2,7 @@ package com.nhnacademy.shoppingmall.controller;
 
 import com.nhnacademy.shoppingmall.domain.ReviewDto;
 import com.nhnacademy.shoppingmall.domain.ReviewRegisterDto;
+import com.nhnacademy.shoppingmall.domain.ReviewUpdateDto;
 import com.nhnacademy.shoppingmall.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,22 +17,22 @@ import java.util.List;
 public class ReviewController {
     private final ReviewService reviewService;
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<ReviewDto>> getReviewsByProductId(@PathVariable Integer productId) {
         return ResponseEntity.ok().body(reviewService.getReviewsByProductId(productId));
     }
 
 
-
+    // userId는 Gateway에서 session으로 받아서 처리하면 좋을듯
     @PostMapping
-    public ResponseEntity<Void> createReview(@RequestBody ReviewRegisterDto reviewRegisterDto) {
-        reviewService.createReview(reviewRegisterDto);
+    public ResponseEntity<Void> createReview(@RequestBody ReviewRegisterDto reviewRegisterDto, @PathVariable("productId") Integer productId) {
+        reviewService.createReview(reviewRegisterDto, productId);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/{reviewId}")
-    public ResponseEntity<Void> updateReview(@RequestBody ReviewRegisterDto reviewRegisterDto, @PathVariable Integer reviewId) {
-        reviewService.updateReview(reviewRegisterDto, reviewId);
+    public ResponseEntity<Void> updateReview(@RequestBody ReviewUpdateDto reviewUpdateDto, @PathVariable Integer reviewId) {
+        reviewService.updateReview(reviewUpdateDto, reviewId);
         return ResponseEntity.ok().build();
     }
 

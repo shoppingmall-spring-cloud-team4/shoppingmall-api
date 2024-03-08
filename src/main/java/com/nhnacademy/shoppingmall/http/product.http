@@ -3,8 +3,12 @@ Accept: application/json
 
 ###
 
-GET http://localhost:8200/product/10
+GET http://localhost:8200/product/1
 Accept: application/json
+
+###
+
+GET http://localhost:8200/product/
 
 ###
 
@@ -13,27 +17,28 @@ Content-Type: application/json
 
 {
   "categoryId": 1,
-  "modelNumber": "310-234",
-  "modelName": "키보드",
-  "productImage":"image.png",
-  "unitCost": 10000,
-  "description": "이것은 키보드입니다."
+  "modelNumber": "DEATH",
+  "modelName": "당근칼",
+  "productImage":"carrotKnife.png",
+  "unitCost": 18000,
+  "description": "이것은 당근칼입니다 굉장히 끔찍한 물건이죠"
 }
 
 
 ###
-PUT http://localhost:8200/product/11
+
+PUT http://localhost:8200/product/1
 Content-Type: application/json
 
 {
-  "categoryId": 3,
-  "modelNumber": "310-234",
-  "modelName": "키보드",
-  "productImage":"image.png",
-  "unitCost": 3333,
-  "description": "이것은 할인된 키보드입니다.."
+  "categoryId": 1,
+  "modelNumber": "DEATH",
+  "modelName": "당근칼",
+  "productImage":"carrotKnife.png",
+  "unitCost": 18000,
+  "description": "이것은 당근칼입니다 굉장히 끔찍한 물건이죠"
 }
 
 ###
 
-DELETE http://localhost:8200/product/11
+DELETE http://localhost:8200/product/5

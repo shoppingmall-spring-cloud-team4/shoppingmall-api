@@ -1,0 +1,30 @@
+GET http://localhost:8200/product/2/review
+Accept: application/json
+
+###
+
+POST http://localhost:8200/product/2/review/
+Content-Type: application/json
+
+{
+  "rating": 5,
+  "comment": "망고가 달고 맛있어요",
+  "userId": "jjunho50",
+  "productId": 2
+}
+
+
+###
+
+PUT http://localhost:8200/product/2/review/4
+Content-Type: application/json
+
+{
+  "reviewId": 3,
+  "rating": 3,
+  "comment": "망고가 국내산이 아니네요 ㅠ. 별점 2점 깎습니다."
+}
+
+###
+
+DELETE http://localhost:8200/product/1/review/2

@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface ShoppingCartRepository extends JpaRepository<ShoppingCart, Integer> {
 
-    @Query("SELECT new com.nhnacademy.shoppingmall.domain.ShoppingCartDto(s.product.productId, s.quantity) FROM ShoppingCart s WHERE s.recordId = :recordId")
-    List<ShoppingCartDto> getAllByRecordId(@Param("recordId") Integer recordId);
+    @Query("SELECT new com.nhnacademy.shoppingmall.domain.ShoppingCartDto(s.user.userId, s.product.productId, s.quantity) FROM ShoppingCart s WHERE s.user.userId = :userId")
+    List<ShoppingCartDto> getAllByUser_UserId(@Param("userId") String userId);
 }

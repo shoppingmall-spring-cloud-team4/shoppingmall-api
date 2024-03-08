@@ -2,13 +2,11 @@ package com.nhnacademy.shoppingmall.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.time.LocalDateTime;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-public class ShoppingCartRegisterDto {
-    private String userId;
+@NoArgsConstructor
+public class ShoppingCartUpdateDto {
     private Integer quantity;
-    private Integer productId;
 }

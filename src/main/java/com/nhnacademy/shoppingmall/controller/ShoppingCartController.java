@@ -2,6 +2,7 @@ package com.nhnacademy.shoppingmall.controller;
 
 import com.nhnacademy.shoppingmall.domain.ShoppingCartDto;
 import com.nhnacademy.shoppingmall.domain.ShoppingCartRegisterDto;
+import com.nhnacademy.shoppingmall.domain.ShoppingCartUpdateDto;
 import com.nhnacademy.shoppingmall.service.ShoppingCartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,9 +17,9 @@ import java.util.List;
 public class ShoppingCartController {
     private final ShoppingCartService shoppingCartService;
 
-    @GetMapping("/{recordId}")
-    public ResponseEntity<List<ShoppingCartDto>> getAllShoppingList(@PathVariable Integer recordId) {
-        return ResponseEntity.ok().body(shoppingCartService.getAllShoppingList(recordId));
+    @GetMapping
+    public ResponseEntity<List<ShoppingCartDto>> getAllShoppingList(@PathVariable("userId") String userId) {
+        return ResponseEntity.ok().body(shoppingCartService.getAllShoppingList(userId));
     }
 
     @PostMapping
@@ -28,8 +29,8 @@ public class ShoppingCartController {
     }
 
     @PutMapping("/{recordId}")
-    public ResponseEntity<Void> updateShoppingCart(@RequestBody ShoppingCartRegisterDto shoppingCartRegisterDto, @PathVariable Integer recordId) {
-        shoppingCartService.updateShppoingCart(shoppingCartRegisterDto, recordId);
+    public ResponseEntity<Void> updateShoppingCart(@RequestBody ShoppingCartUpdateDto shoppingCartUpdateDto, @PathVariable Integer recordId) {
+        shoppingCartService.updateShppoingCart(shoppingCartUpdateDto, recordId);
         return ResponseEntity.ok().build();
     }
 
