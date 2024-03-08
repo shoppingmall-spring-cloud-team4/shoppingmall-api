@@ -10,7 +10,6 @@ import com.nhnacademy.shoppingmall.repository.CategoryRepository;
 import com.nhnacademy.shoppingmall.repository.ProductRepository;
 import com.nhnacademy.shoppingmall.service.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,8 +43,19 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void createProduct(ProductRegisterDto productRegisterDto) {
-        Product product = Product.builder().build();
-        BeanUtils.copyProperties(productRegisterDto, product);
+        Category category = categoryRepository.findById(productRegisterDto.getCategoryId()).orElse(null);
+        if(category == null)
+            throw new CategoryNotFoundException(productRegisterDto.getCategoryId());
+
+        Product product = Product.builder()
+                .productId(productRegisterDto.getProductId())
+                .category(category)
+                .modelNumber(productRegisterDto.getModelNumber())
+                .modelName(productRegisterDto.getModelName())
+                .productImage(productRegisterDto.getProductImage())
+                .description(productRegisterDto.getDescription())
+                .unitCost(productRegisterDto.getUnitCost())
+                .build();
 
         productRepository.save(product);
     }

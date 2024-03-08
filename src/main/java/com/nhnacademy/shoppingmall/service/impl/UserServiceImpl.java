@@ -6,7 +6,6 @@ import com.nhnacademy.shoppingmall.entity.User;
 import com.nhnacademy.shoppingmall.repository.UserRepository;
 import com.nhnacademy.shoppingmall.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

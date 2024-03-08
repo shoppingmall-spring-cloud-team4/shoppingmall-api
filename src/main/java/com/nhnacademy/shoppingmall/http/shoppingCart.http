@@ -4,3 +4,24 @@ Accept: application/json
 ###
 
 POST http://localhost:8200/user/jjunho50/shoppingCart
+Content-Type: application/json
+
+{
+  "userId": "jjunho50",
+  "productId": 1,
+  "quantity": 3
+}
+
+
+###
+
+PUT http://localhost:8200/user/jjunho50/shoppingCart/1
+Content-Type: application/json
+
+{
+  "quantity": 10
+}
+
+###
+
+DELETE http://localhost:8200/user/jjunho50/shoppingCart/1

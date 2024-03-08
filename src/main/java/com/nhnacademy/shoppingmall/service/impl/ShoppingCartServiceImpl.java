@@ -2,6 +2,7 @@ package com.nhnacademy.shoppingmall.service.impl;
 
 import com.nhnacademy.shoppingmall.domain.ShoppingCartDto;
 import com.nhnacademy.shoppingmall.domain.ShoppingCartRegisterDto;
+import com.nhnacademy.shoppingmall.domain.ShoppingCartUpdateDto;
 import com.nhnacademy.shoppingmall.entity.Product;
 import com.nhnacademy.shoppingmall.entity.ShoppingCart;
 import com.nhnacademy.shoppingmall.entity.User;
@@ -12,7 +13,6 @@ import com.nhnacademy.shoppingmall.repository.ShoppingCartRepository;
 import com.nhnacademy.shoppingmall.repository.UserRepository;
 import com.nhnacademy.shoppingmall.service.ShoppingCartService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -26,8 +26,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private final UserRepository userRepository;
 
     @Override
-    public List<ShoppingCartDto> getAllShoppingList() {
-        return shoppingCartRepository.getAllByUser_UserId();
+    public List<ShoppingCartDto> getAllShoppingList(String userId) {
+        return shoppingCartRepository.getAllByUser_UserId(userId);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public void updateShppoingCart(ShoppingCartRegisterDto shoppingCartRegisterDto, Integer recordId) {
+    public void updateShppoingCart(ShoppingCartUpdateDto shoppingCartUpdateDto, Integer recordId) {
         ShoppingCart existedShoppingcart = shoppingCartRepository.findById(recordId).orElse(null);
 
         if(existedShoppingcart != null)
@@ -62,7 +62,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                     .dateCreated(LocalDateTime.now())
                     .product(existedShoppingcart.getProduct())
                     .user(existedShoppingcart.getUser())
-                    .quantity(shoppingCartRegisterDto.getQuantity()).build();
+                    .quantity(shoppingCartUpdateDto.getQuantity()).build();
 
             shoppingCartRepository.save(shoppingCart);
         }

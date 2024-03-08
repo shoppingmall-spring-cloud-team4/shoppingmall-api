@@ -3,8 +3,12 @@ Accept: application/json
 
 ###
 
-GET http://localhost:8200/product/2
+GET http://localhost:8200/product/1
 Accept: application/json
+
+###
+
+GET http://localhost:8200/product/
 
 ###
 
@@ -13,27 +17,26 @@ Content-Type: application/json
 
 {
   "categoryId": 1,
-  "modelNumber": "PPAP",
-  "modelName": "파인애플",
-  "productImage":"Pineapple.png",
+  "modelNumber": "DEATH",
+  "modelName": "당근칼",
+  "productImage":"carrotKnife.png",
   "unitCost": 18000,
-  "description": "이것은 파인애플입니다."
+  "description": "이것은 당근칼입니다 굉장히 끔찍한 물건이죠"
 }
 
 
 ###
 
-PUT http://localhost:8200/product/6
+PUT http://localhost:8200/product/1
 Content-Type: application/json
 
 {
-  "productId": 6,
   "categoryId": 1,
-  "modelNumber": "PPAP",
-  "modelName": "파인애플",
-  "productImage":"Pineapple.png",
-  "unitCost": 1800,
-  "description": "파인애플 가격이 떡락했습니다 ㅠㅠ.."
+  "modelNumber": "DEATH",
+  "modelName": "당근칼",
+  "productImage":"carrotKnife.png",
+  "unitCost": 18000,
+  "description": "이것은 당근칼입니다 굉장히 끔찍한 물건이죠"
 }
 
 ###
