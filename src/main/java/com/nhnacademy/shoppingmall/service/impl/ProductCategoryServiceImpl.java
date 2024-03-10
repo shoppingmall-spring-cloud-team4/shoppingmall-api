@@ -5,6 +5,7 @@ import com.nhnacademy.shoppingmall.domain.ProductCategoryRegisterDto;
 import com.nhnacademy.shoppingmall.entity.Category;
 import com.nhnacademy.shoppingmall.entity.Product;
 import com.nhnacademy.shoppingmall.entity.ProductCategory;
+import com.nhnacademy.shoppingmall.exception.CategoryMoreThanThree;
 import com.nhnacademy.shoppingmall.exception.CategoryNotFoundException;
 import com.nhnacademy.shoppingmall.exception.ProductNotFoundException;
 import com.nhnacademy.shoppingmall.repository.CategoryRepository;
@@ -26,6 +27,9 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
     @Override
     public ProductCategory createProductCategory(Integer productId, ProductCategoryRegisterDto productCategoryRegisterDto) {
+        if(productCategoryRepository.getAllByProductProductId(productId).size() == 3)
+            throw new CategoryMoreThanThree(productId);
+
         Integer categoryId = productCategoryRegisterDto.getCategoryId();
 
         Product product = productRepository.findById(productId).orElseThrow(() -> new ProductNotFoundException(productId));
