@@ -37,7 +37,6 @@ class ReviewControllerTest {
 
     @Test
     void getReviewsByProductId() throws Exception {
-        // Given
         Integer productId = 1;
         List<ReviewDto> reviewList = Arrays.asList(
                 new ReviewDto(5, LocalDateTime.now(), "Great item!", "user1"),
@@ -45,7 +44,6 @@ class ReviewControllerTest {
         );
         given(reviewService.getReviewsByProductId(productId)).willReturn(reviewList);
 
-        // When-Then
         mockMvc.perform(get("/api/product/" + productId + "/review")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -74,12 +72,10 @@ class ReviewControllerTest {
 
     @Test
     void updateReview() throws Exception {
-        // Given
         Integer productId = 1;
         Integer reviewId = 1;
         ReviewUpdateDto reviewUpdateDto = new ReviewUpdateDto(5, "Updated item comment!");
 
-        // When-Then
         mockMvc.perform(put("/api/product/" + productId + "/review/" + reviewId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(reviewUpdateDto)))
