@@ -9,6 +9,5 @@ import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product, Integer> {
     List<ProductDto> getAllBy();
-    List<ProductDto> getAllByCategory_CategoryId(Integer categoryId);
     Optional<ProductDto> getByProductId(Integer productId);
 }

@@ -16,7 +16,7 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:8200/api/product/2/review/4
+PUT http://localhost:8200/api/product/2/review/1
 Content-Type: application/json
 
 {

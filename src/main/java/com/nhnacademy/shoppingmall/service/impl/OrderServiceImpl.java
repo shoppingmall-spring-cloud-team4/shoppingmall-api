@@ -95,7 +95,7 @@ public class OrderServiceImpl implements OrderService {
                     .product(product)
                     .unitCost(productDto.getUnitCost())
                     .quantity(productDto.getQuantity())
-                    .pk(pk) ////
+                    .pk(pk)
                     .build();
 
             orderDetails.add(orderDetail);
