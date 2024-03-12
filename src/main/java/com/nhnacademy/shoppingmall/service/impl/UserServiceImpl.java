@@ -1,5 +1,6 @@
 package com.nhnacademy.shoppingmall.service.impl;
 
+import com.nhnacademy.shoppingmall.domain.AuthUserDto;
 import com.nhnacademy.shoppingmall.domain.UserDto;
 import com.nhnacademy.shoppingmall.domain.UserRegisterDto;
 import com.nhnacademy.shoppingmall.entity.User;
@@ -25,7 +26,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<UserDto> getUserById(String userId) {
+    public Optional<AuthUserDto> getUserById(String userId) {
         return userRepository.getByUserId(userId);
     }
 
@@ -38,7 +39,7 @@ public class UserServiceImpl implements UserService {
                 .userBirth(userRegisterDto.getUserBirth())
                 .createdAt(LocalDateTime.now())
                 .userPoint(1000000)
-                .userAuth("user")
+                .userAuth("ROLE_USER")
                 .build();
 
         userRepository.save(user);
