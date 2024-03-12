@@ -1,6 +1,6 @@
 # 전부 정상작동함 ㅎ
 
-GET localhost:8200/api/user
+GET localhost:8200/api/user?page=1&size=2
 Accept: application/json
 
 ###

@@ -3,6 +3,7 @@ package com.nhnacademy.shoppingmall.service.impl;
 import com.nhnacademy.shoppingmall.domain.UserDto;
 import com.nhnacademy.shoppingmall.domain.UserRegisterDto;
 import com.nhnacademy.shoppingmall.entity.User;
+import com.nhnacademy.shoppingmall.exception.UserAlreadyExistException;
 import com.nhnacademy.shoppingmall.repository.UserRepository;
 import com.nhnacademy.shoppingmall.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -37,8 +38,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createUser(UserRegisterDto userRegisterDto) {
+        String userId = userRegisterDto.getUserId();
+
+        if(userRepository.existsById(userId))
+            throw new UserAlreadyExistException(userId);
+
         User user = User.builder()
-                .userId(userRegisterDto.getUserId())
+                .userId(userId)
                 .userName(userRegisterDto.getUserName())
                 .userPassword(userRegisterDto.getUserPassword())
                 .userBirth(userRegisterDto.getUserBirth())
