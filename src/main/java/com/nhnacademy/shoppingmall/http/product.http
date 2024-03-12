@@ -1,11 +1,10 @@
-GET http://localhost:8200/product
+GET http://localhost:8200/api/product?page=0
 Accept: application/json
 
 ###
 
-GET http://localhost:8200/product/1
+GET http://localhost:8200/api/product/1
 Accept: application/json
-nhn_academy_35
 ###
 
 GET http://localhost:8200/api/product/
@@ -30,12 +29,11 @@ PUT http://localhost:8200/api/product/1
 Content-Type: application/json
 
 {
-  "categoryId": 1,
   "modelNumber": "DEATH",
   "modelName": "당근칼",
   "productImage":"carrotKnife.png",
-  "unitCost": 18000,
-  "description": "이것은 당근칼입니다 굉장히 끔찍한 물건이죠"
+  "unitCost": 5000,
+  "description": "이것은 흉기가 아닙니다."
 }
 
 ###

@@ -7,6 +7,8 @@ import com.nhnacademy.shoppingmall.exception.ProductNotFoundException;
 import com.nhnacademy.shoppingmall.repository.ProductRepository;
 import com.nhnacademy.shoppingmall.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +24,12 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductDto> getProducts() {
         return productRepository.getAllBy();
+    }
+
+    @Override
+    public Page<ProductDto> getAllProductsPage(Pageable pageable)
+    {
+        return productRepository.getPageBy(pageable);
     }
 
     @Override

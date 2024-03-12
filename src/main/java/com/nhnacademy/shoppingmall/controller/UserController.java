@@ -7,6 +7,8 @@ import com.nhnacademy.shoppingmall.domain.UserRegisterDto;
 import com.nhnacademy.shoppingmall.service.ReviewService;
 import com.nhnacademy.shoppingmall.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,9 +24,9 @@ public class UserController {
     private final ReviewService reviewService;
 
     @GetMapping
-    public ResponseEntity<List<UserDto>> getAllUsers()
+    public ResponseEntity<List<UserDto>> getAllPagingUsers(Pageable pageable)
     {
-        return ResponseEntity.ok().body(userService.getUsers());
+        return ResponseEntity.ok().body(userService.getPagingUsers(pageable).getContent());
     }
 
     @GetMapping("/{userId}")
@@ -35,8 +37,8 @@ public class UserController {
 
     // User가 작성한 reviews
     @GetMapping("/{userId}/review")
-    public ResponseEntity<List<ReviewDto>> getReviewsByUserId(@PathVariable String userId) {
-        return ResponseEntity.ok().body(reviewService.getReviewsByUserId(userId));
+    public ResponseEntity<List<ReviewDto>> getReviewsByUserId(@PathVariable String userId, @PageableDefault(size = 5) Pageable pageable) {
+        return ResponseEntity.ok().body(reviewService.getPagesByUserId(userId, pageable).getContent());
     }
 
     @PostMapping

@@ -6,6 +6,8 @@ import com.nhnacademy.shoppingmall.entity.User;
 import com.nhnacademy.shoppingmall.repository.UserRepository;
 import com.nhnacademy.shoppingmall.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,6 +23,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto> getUsers() {
         return userRepository.getAllBy();
+    }
+
+    @Override
+    public Page<UserDto> getPagingUsers(Pageable pageable) {
+        return userRepository.getPagesBy(pageable);
     }
 
     @Override

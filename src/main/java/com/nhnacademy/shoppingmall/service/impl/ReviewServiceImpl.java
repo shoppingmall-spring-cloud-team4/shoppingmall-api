@@ -15,6 +15,8 @@ import com.nhnacademy.shoppingmall.repository.UserRepository;
 import com.nhnacademy.shoppingmall.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -34,8 +36,18 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    public Page<ReviewDto> getPagesByProductId(Integer productId, Pageable pageable) {
+        return reviewRepository.getPagesByProduct_ProductId(productId, pageable);
+    }
+
+    @Override
     public List<ReviewDto> getReviewsByUserId(String userId) {
         return reviewRepository.getAllByUser_UserId(userId);
+    }
+
+    @Override
+    public Page<ReviewDto> getPagesByUserId(String userId, Pageable pageable) {
+        return reviewRepository.getPagesByUser_UserId(userId, pageable);
     }
 
     @Override
