@@ -37,8 +37,8 @@ class ProductControllerTest {
     @Test
     void getProducts() throws Exception {
         List<ProductDto> productDtos = Arrays.asList(
-                new ProductDto("image1", "description1", "model1", 18000L),
-                new ProductDto("image2", "description2", "model2", 20000L)
+                new ProductDto("image1", "description1", "model1", 18000),
+                new ProductDto("image2", "description2", "model2", 20000)
         );
 
         when(productService.getProducts()).thenReturn(productDtos);
@@ -56,7 +56,7 @@ class ProductControllerTest {
     @Test
     void getProduct() throws Exception{
         Integer productId = 1;
-        ProductDto productDto = new ProductDto("image", "description", "model", 10000L);
+        ProductDto productDto = new ProductDto("image", "description", "model", 10000);
 
         when(productService.getProductById(productId)).thenReturn(Optional.of(productDto));
 
@@ -70,7 +70,7 @@ class ProductControllerTest {
 
     @Test
     void createProduct() throws Exception {
-        ProductRegisterDto productRegisterDto = new ProductRegisterDto(1, "model1", "model1", "image1", 10000L, "description1");
+        ProductRegisterDto productRegisterDto = new ProductRegisterDto(1, "model1", "model1", "image1", 10000, "description1");
 
         doNothing().when(productService).createProduct(productRegisterDto);
 
@@ -85,7 +85,7 @@ class ProductControllerTest {
     @Test
     void updateProduct() throws Exception {
         Integer productId = 1;
-        ProductRegisterDto productRegisterDto = new ProductRegisterDto(1, "model1", "model1", "image1", 10000L, "description1");
+        ProductRegisterDto productRegisterDto = new ProductRegisterDto(1, "model1", "model1", "image1", 10000, "description1");
 
         doNothing().when(productService).updateProduct(productRegisterDto, productId);
 

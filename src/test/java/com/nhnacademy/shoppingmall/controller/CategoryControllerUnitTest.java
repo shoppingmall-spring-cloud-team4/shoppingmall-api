@@ -39,7 +39,7 @@ class CategoryControllerUnitTest {
 
         given(categoryService.getAllCategories()).willReturn(categoryResponses);
 
-        mockMvc.perform(get("/api/category"))
+        mockMvc.perform(get("/api/shop/category"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].categoryId", equalTo(100)))
                 .andExpect(jsonPath("$[0].categoryName", equalTo("모니터")));
@@ -51,7 +51,7 @@ class CategoryControllerUnitTest {
 
         given(categoryService.getCategory("Electronics")).willReturn(categoryResponse);
 
-        mockMvc.perform(get("/api/category/{categoryName}", "Electronics"))
+        mockMvc.perform(get("/api/shop/category/{categoryName}", "Electronics"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.categoryId", equalTo(101)))
                 .andExpect(jsonPath("$.categoryName", equalTo("태블릿")));
@@ -61,7 +61,7 @@ class CategoryControllerUnitTest {
     void createCategory() throws Exception {
         CategoryRequest categoryRequest = new CategoryRequest("책");
 
-        mockMvc.perform(post("/api/category")
+        mockMvc.perform(post("/api/shop/category")
                         .content(objectMapper.writeValueAsString(categoryRequest))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated());
@@ -71,7 +71,7 @@ class CategoryControllerUnitTest {
     void updateCategory() throws Exception{
         CategoryRequest categoryRequest = new CategoryRequest("워치");
 
-        mockMvc.perform(put("/api/category/{categoryId}", 1)
+        mockMvc.perform(put("/api/shop/category/{categoryId}", 1)
                         .content(objectMapper.writeValueAsString(categoryRequest))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
@@ -79,7 +79,7 @@ class CategoryControllerUnitTest {
 
     @Test
     void deleteCategory() throws Exception {
-        mockMvc.perform(delete("/api/category/{categoryId}", 1))
+        mockMvc.perform(delete("/api/shop/category/{categoryId}", 1))
                 .andExpect(status().isOk());
     }
 }
