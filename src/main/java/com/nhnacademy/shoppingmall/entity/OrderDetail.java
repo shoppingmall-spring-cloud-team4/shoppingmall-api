@@ -27,10 +27,10 @@ public class OrderDetail {
     private Integer quantity; // 수량
 
     @Column(name = "unit_cost")
-    private Long unitCost; //가격
+    private Integer unitCost; //가격
 
     @Column(name = "total_cost")
-    private Long totalCost; //총 금액
+    private Integer totalCost; //총 금액
 
     @Embeddable
     @EqualsAndHashCode
@@ -42,7 +42,7 @@ public class OrderDetail {
     }
 
     @Builder
-    public OrderDetail(Order order, Product product, Integer quantity, Long unitCost, Long totalCost, Pk pk) {
+    public OrderDetail(Order order, Product product, Integer quantity, Integer unitCost, Integer totalCost, Pk pk) {
         this.order = order;
         this.product = product;
         this.quantity = quantity;

@@ -30,4 +30,4 @@ Content-Type: application/json
 
 
 ### 특정 주문 삭제
-DELETE localhost:8200/api/order/13
+DELETE localhost:8200/api/order/9

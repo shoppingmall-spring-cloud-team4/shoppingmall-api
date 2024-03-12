@@ -35,7 +35,7 @@ class OrderControllerUnitTest {
 
     @Test
     void getAllOrders() throws Exception {
-        OrderedProductDto orderedProductDto = new OrderedProductDto(1, 3, 2000L);
+        OrderedProductDto orderedProductDto = new OrderedProductDto(1, 3, 2000);
         List<OrderedProductDto> orderProducts = Collections.singletonList(orderedProductDto);
 
         OrderResponse orderResponse = new OrderResponse(100, LocalDateTime.now(), LocalDateTime.now().plusDays(3), "aaa", "123대로", "a빌딩", orderProducts);
@@ -54,7 +54,7 @@ class OrderControllerUnitTest {
 
     @Test
     void getOrder() throws Exception {
-        OrderedProductDto orderedProductDto = new OrderedProductDto(1, 3, 2000L);
+        OrderedProductDto orderedProductDto = new OrderedProductDto(1, 3, 2000);
         List<OrderedProductDto> orderProducts = Collections.singletonList(orderedProductDto);
         OrderResponse orderResponse = new OrderResponse(100, LocalDateTime.now(), LocalDateTime.now().plusDays(3), "aaa", "123대로", "a빌딩", orderProducts);
 
@@ -70,7 +70,7 @@ class OrderControllerUnitTest {
     @Test
     void createOrder() throws Exception{
 
-        OrderedProductDto orderedProductDto = new OrderedProductDto(3, 3, 5000L);
+        OrderedProductDto orderedProductDto = new OrderedProductDto(3, 3, 5000);
         List<OrderedProductDto> orderProducts = Collections.singletonList(orderedProductDto);
         OrderRequest orderRequest = new OrderRequest("aaa", 1, orderProducts);
 

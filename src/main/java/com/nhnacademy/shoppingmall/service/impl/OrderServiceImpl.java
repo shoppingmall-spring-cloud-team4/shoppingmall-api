@@ -88,7 +88,7 @@ public class OrderServiceImpl implements OrderService {
         List<OrderDetail> orderDetails = new ArrayList<>();
         orderRepository.save(order);
 
-        Long totalCost = 0L;
+        Integer totalCost = 0;
 
         for (OrderedProductDto productDto : orderRequest.getOrderProducts()) {
             Product product = productRepository.findById(productDto.getProductId())
@@ -116,7 +116,8 @@ public class OrderServiceImpl implements OrderService {
             throw new UserPointNotEnoughException(userPoint);
         }
 
-//        user.updatePoint(totalCost);
+        user.updatePoint(totalCost);
+        log.debug(">>>> 남은 포인트 : " + user.getUserPoint());
 
         orderDetailsRepository.saveAll(orderDetails);
     }

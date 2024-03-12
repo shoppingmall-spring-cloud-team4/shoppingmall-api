@@ -54,7 +54,7 @@ public class User {
         this.latestLoginAt = latestLoginAt;
     }
 
-//    public void updatePoint(Long totalCost){
-//        this.userPoint -= totalCost;
-//    }
+    public void updatePoint(Integer totalCost){
+        this.userPoint -= totalCost;
+    }
 }

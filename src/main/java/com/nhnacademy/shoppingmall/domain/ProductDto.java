@@ -10,5 +10,5 @@ public class ProductDto {
     private String productImage;
     private String description;
     private String modelName;
-    private Long unitCost;
+    private Integer unitCost;
 }
