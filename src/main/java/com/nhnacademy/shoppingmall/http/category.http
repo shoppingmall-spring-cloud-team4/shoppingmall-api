@@ -1,13 +1,13 @@
 ### 모든 카테고리 조회
-GET localhost:8200/api/category
+GET localhost:8200/api/shop/category
 
 
 ### 특정 카테고리 조회
-GET localhost:8200/api/category/장난감
+GET localhost:8200/api/shop/category/장난감
 
 
 ### 카테고리 생성
-POST localhost:8200/api/category
+POST localhost:8200/api/shop/category
 Content-Type: application/json
 
 {
@@ -16,7 +16,7 @@ Content-Type: application/json
 
 ###
 
-POST localhost:8200/api/category
+POST localhost:8200/api/shop/category
 Content-Type: application/json
 
 {
@@ -25,7 +25,7 @@ Content-Type: application/json
 
 
 ### 특정 카테고리 수정
-PUT localhost:8200/api/category/2
+PUT localhost:8200/api/shop/category/2
 Content-Type: application/json
 
 {

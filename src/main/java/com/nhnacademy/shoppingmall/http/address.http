@@ -1,15 +1,15 @@
 ### 모든 주소 조회
-GET localhost:8200/api/address
+GET localhost:8200/api/shop/address
 X-USER-ID: aaa
 
 
 ### 특정 주소 조회
-GET localhost:8200/api/address/1
+GET localhost:8200/api/shop/address/1
 X-USER-ID: aaa
 
 
 ### 주소 생성
-POST localhost:8200/api/address
+POST localhost:8200/api/shop/address
 X-USER-ID: aaa
 Content-Type: application/json
 
@@ -21,7 +21,7 @@ Content-Type: application/json
 
 
 ### 특정 주소 수정
-PUT localhost:8200/api/address/5
+PUT localhost:8200/api/shop/address/5
 X-USER-ID: aaa
 Content-Type: application/json
 
@@ -33,4 +33,4 @@ Content-Type: application/json
 
 
 ### 특정 주소 삭제
-DELETE localhost:8200/api/address/5
+DELETE localhost:8200/api/shop/address/5

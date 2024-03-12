@@ -43,7 +43,7 @@ public class AddressControllerUnitTest {
         given(addressService.getAllAddresses("aaa"))
                 .willReturn(addressResponses);
 
-        MvcResult result = mockMvc.perform(get("/api/address")
+        MvcResult result = mockMvc.perform(get("/api/shop/address")
                         .header("X-USER-ID", "aaa"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].zipcode", equalTo("123대로")))
@@ -60,7 +60,7 @@ public class AddressControllerUnitTest {
         given(addressService.getAddress(100, "aaa"))
                 .willReturn(addressResponse);
 
-        mockMvc.perform(get("/api/address/{addressId}", 100)
+        mockMvc.perform(get("/api/shop/address/{addressId}", 100)
                         .header("X-USER-ID", "aaa"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.addressDetail", equalTo(addressResponse.getAddressDetail())));
@@ -70,7 +70,7 @@ public class AddressControllerUnitTest {
     void createAddress() throws Exception {
         AddressRequest addressRequest = new AddressRequest("456대로", "b빌딩", "딩동");
 
-        mockMvc.perform(post("/api/address")
+        mockMvc.perform(post("/api/shop/address")
                         .header("X-USER-ID", "aaa")
                         .content(objectMapper.writeValueAsString(addressRequest))
                         .contentType(MediaType.APPLICATION_JSON))
@@ -81,7 +81,7 @@ public class AddressControllerUnitTest {
     void updateAddress() throws Exception {
         AddressRequest addressRequest = new AddressRequest("789대로", "c빌딩", "집 뒤");
 
-        mockMvc.perform(put("/api/address/{addressId}", 100)
+        mockMvc.perform(put("/api/shop/address/{addressId}", 100)
                         .header("X-USER-ID", "aaa")
                         .content(objectMapper.writeValueAsString(addressRequest))
                         .contentType(MediaType.APPLICATION_JSON))
@@ -90,7 +90,7 @@ public class AddressControllerUnitTest {
 
     @Test
     void deleteAddress() throws Exception {
-        mockMvc.perform(delete("/api/address/{addressId}", 100))
+        mockMvc.perform(delete("/api/shop/address/{addressId}", 100))
                 .andExpect(status().isOk());
     }
 }
