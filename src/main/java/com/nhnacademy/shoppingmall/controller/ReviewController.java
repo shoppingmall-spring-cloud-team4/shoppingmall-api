@@ -25,7 +25,11 @@ public class ReviewController {
     }
 
 
-    // userId는 Gateway에서 session으로 받아서 처리하면 좋을듯
+    // User가 작성한 reviews
+    @GetMapping("/my_review")
+    public ResponseEntity<List<ReviewDto>> getReviewsByUserId(@RequestHeader("X-USER-ID") String userId, @PageableDefault(size = 5) Pageable pageable) {
+        return ResponseEntity.ok().body(reviewService.getPagesByUserId(userId, pageable).getContent());
+    }
     @PostMapping
     public ResponseEntity<Void> createReview(@RequestBody ReviewRegisterDto reviewRegisterDto, @PathVariable("productId") Integer productId) {
         reviewService.createReview(reviewRegisterDto, productId);
