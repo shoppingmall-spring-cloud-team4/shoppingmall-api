@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/api/product")
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductService productService;
@@ -26,12 +26,6 @@ public class ProductController {
     public ResponseEntity<Optional<ProductDto>> getProduct(@PathVariable("productId") Integer productId)
     {
         return ResponseEntity.ok().body(productService.getProductById(productId));
-    }
-
-    @GetMapping("/category/{categoryId}")
-    public ResponseEntity<List<ProductDto>> getCategoryProducts(@PathVariable Integer categoryId)
-    {
-        return ResponseEntity.ok().body(productService.getProductsByCategoryId(categoryId));
     }
 
     @PostMapping

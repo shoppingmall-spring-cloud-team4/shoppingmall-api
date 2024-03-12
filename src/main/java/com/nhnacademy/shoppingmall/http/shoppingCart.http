@@ -1,9 +1,9 @@
-GET http://localhost:8200/user/jjunho50/shoppingCart
+GET http://localhost:8200/api/user/jjunho50/shoppingCart
 Accept: application/json
 
 ###
 
-POST http://localhost:8200/user/jjunho50/shoppingCart
+POST http://localhost:8200/api/user/jjunho50/shoppingCart
 Content-Type: application/json
 
 {
@@ -15,7 +15,7 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:8200/user/jjunho50/shoppingCart/1
+PUT http://localhost:8200/api/user/jjunho50/shoppingCart/1
 Content-Type: application/json
 
 {
@@ -24,4 +24,4 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:8200/user/jjunho50/shoppingCart/1
+DELETE http://localhost:8200/api/user/jjunho50/shoppingCart/1

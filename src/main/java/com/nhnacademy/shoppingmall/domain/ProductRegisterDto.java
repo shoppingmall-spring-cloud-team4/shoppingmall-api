@@ -8,7 +8,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class ProductRegisterDto {
     private Integer productId;
-    private Integer categoryId;
     private String modelNumber;
     private String modelName;
     private String productImage;

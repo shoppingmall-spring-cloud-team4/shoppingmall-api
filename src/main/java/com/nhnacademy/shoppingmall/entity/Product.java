@@ -16,9 +16,6 @@ public class Product {
     @Column(name = "product_id")
     private Integer productId;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category; // 카테고리 아이디
 
     @Column(name = "model_number")
     @Length(max = 10)
@@ -41,7 +38,6 @@ public class Product {
     public Product(Integer productId, Category category, String modelNumber, String modelName, String productImage, Integer unitCost,
             String description) {
         this.productId = productId;
-        this.category = category;
         this.modelNumber = modelNumber;
         this.modelName = modelName;
         this.productImage = productImage;

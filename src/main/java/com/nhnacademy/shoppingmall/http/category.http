@@ -14,6 +14,15 @@ Content-Type: application/json
   "categoryName": "장난감"
 }
 
+###
+
+POST localhost:8200/api/category
+Content-Type: application/json
+
+{
+  "categoryName": "나이프"
+}
+
 
 ### 특정 카테고리 수정
 PUT localhost:8200/api/category/2

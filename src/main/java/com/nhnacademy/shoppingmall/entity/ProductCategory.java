@@ -6,8 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Getter
-@Setter
+@Getter @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "ProductCategory")
 public class ProductCategory {
@@ -35,8 +34,9 @@ public class ProductCategory {
     }
 
     @Builder
-    public ProductCategory(Category category, Product product) {
+    public ProductCategory(Category category, Product product, Pk pk) {
         this.category = category;
         this.product = product;
+        this.pk = pk;
     }
 }
