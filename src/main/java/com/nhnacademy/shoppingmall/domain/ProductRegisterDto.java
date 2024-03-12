@@ -11,6 +11,6 @@ public class ProductRegisterDto {
     private String modelNumber;
     private String modelName;
     private String productImage;
-    private Long unitCost;
+    private Integer unitCost;
     private String description;
 }

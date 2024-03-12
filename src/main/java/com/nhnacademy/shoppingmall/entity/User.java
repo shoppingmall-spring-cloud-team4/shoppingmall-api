@@ -53,4 +53,8 @@ public class User {
         this.createdAt = createdAt;
         this.latestLoginAt = latestLoginAt;
     }
+
+    public void updatePoint(Integer totalCost){
+        this.userPoint -= totalCost;
+    }
 }

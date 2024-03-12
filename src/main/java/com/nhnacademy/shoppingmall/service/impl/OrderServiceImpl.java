@@ -6,9 +6,11 @@ import com.nhnacademy.shoppingmall.domain.OrderResponse;
 import com.nhnacademy.shoppingmall.entity.*;
 import com.nhnacademy.shoppingmall.exception.OrderNotFoundException;
 import com.nhnacademy.shoppingmall.exception.ProductNotFoundException;
+import com.nhnacademy.shoppingmall.exception.UserPointNotEnoughException;
 import com.nhnacademy.shoppingmall.repository.*;
 import com.nhnacademy.shoppingmall.service.OrderService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -19,6 +21,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 @Transactional
+@Slf4j
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final OrderDetailsRepository orderDetailsRepository;
@@ -70,6 +73,7 @@ public class OrderServiceImpl implements OrderService {
         User user = userRepository.findById(orderRequest.getUserId()).orElse(null);
         Address address = addressRepository.findById(orderRequest.getAddressId()).orElse(null);
 
+
         if (user == null || address == null) {
             throw new IllegalStateException("user 또는 address가 null 입니다.");
         }
@@ -82,12 +86,13 @@ public class OrderServiceImpl implements OrderService {
                 .build();
 
         List<OrderDetail> orderDetails = new ArrayList<>();
-        orderRepository.save(order); //////
+        orderRepository.save(order);
+
+        Integer totalCost = 0;
 
         for (OrderedProductDto productDto : orderRequest.getOrderProducts()) {
             Product product = productRepository.findById(productDto.getProductId())
                     .orElseThrow(() -> new ProductNotFoundException(productDto.getProductId()));
-
 
             OrderDetail.Pk pk = new OrderDetail.Pk(order.getOrderId(), product.getProductId()); ////
             OrderDetail orderDetail = OrderDetail.builder()
@@ -95,11 +100,24 @@ public class OrderServiceImpl implements OrderService {
                     .product(product)
                     .unitCost(productDto.getUnitCost())
                     .quantity(productDto.getQuantity())
+                    .totalCost(productDto.getUnitCost() * productDto.getQuantity())
                     .pk(pk)
                     .build();
 
+            totalCost += orderDetail.getTotalCost();
+
             orderDetails.add(orderDetail);
         }
+
+        log.debug("총 주문 금액 : " + totalCost);
+
+        Integer userPoint = user.getUserPoint();
+        if(totalCost > userPoint){
+            throw new UserPointNotEnoughException(userPoint);
+        }
+
+        user.updatePoint(totalCost);
+        log.debug(">>>> 남은 포인트 : " + user.getUserPoint());
 
         orderDetailsRepository.saveAll(orderDetails);
     }
