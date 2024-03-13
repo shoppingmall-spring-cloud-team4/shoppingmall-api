@@ -27,4 +27,4 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:8200/api/product/1/review/2
+DELETE http://localhost:8200/api/product/1/review/8

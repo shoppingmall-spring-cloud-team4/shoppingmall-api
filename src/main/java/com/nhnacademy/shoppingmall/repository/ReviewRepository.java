@@ -23,4 +23,6 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
 
     @Query("SELECT new com.nhnacademy.shoppingmall.domain.ReviewDto(r.rating, r.reviewDateCreated, r.comment, r.user.userId) FROM Review r WHERE r.product.productId = :productId")
     Page<ReviewDto> getPagesByProduct_ProductId(@Param("productId") Integer productId, Pageable pageable);
+
+    Review getByUser_UserIdAndProduct_ProductId(String userId, Integer productId);
 }
