@@ -4,6 +4,7 @@ import com.nhnacademy.shoppingmall.domain.UserDto;
 import com.nhnacademy.shoppingmall.domain.UserRegisterDto;
 import com.nhnacademy.shoppingmall.entity.User;
 import com.nhnacademy.shoppingmall.exception.UserAlreadyExistException;
+import com.nhnacademy.shoppingmall.exception.UserNotFoundException;
 import com.nhnacademy.shoppingmall.repository.UserRepository;
 import com.nhnacademy.shoppingmall.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -50,7 +51,7 @@ public class UserServiceImpl implements UserService {
                 .userBirth(userRegisterDto.getUserBirth())
                 .createdAt(LocalDateTime.now())
                 .userPoint(1000000)
-                .userAuth("user")
+                .userAuth("ROLE_USER")
                 .build();
 
         userRepository.save(user);
@@ -72,6 +73,8 @@ public class UserServiceImpl implements UserService {
                     .build();
 
             userRepository.save(user);
+        } else {
+            throw new UserNotFoundException(userId);
         }
     }
 
