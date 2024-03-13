@@ -8,5 +8,5 @@ import lombok.Data;
 public class OrderedProductDto {
     private Integer productId;
     private Integer quantity;
-    private Long unitCost;
+    private Integer unitCost;
 }

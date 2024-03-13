@@ -8,7 +8,6 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor(access=AccessLevel.PROTECTED)
 @Table(name = "Addresses")
 public class Address {
