@@ -38,7 +38,7 @@ class OrderControllerUnitTest {
         OrderedProductDto orderedProductDto = new OrderedProductDto(1, 3, 2000);
         List<OrderedProductDto> orderProducts = Collections.singletonList(orderedProductDto);
 
-        OrderResponse orderResponse = new OrderResponse(100, LocalDateTime.now(), LocalDateTime.now().plusDays(3), "aaa", "123대로", "a빌딩", orderProducts);
+        OrderResponse orderResponse = new OrderResponse(100, LocalDateTime.now(), LocalDateTime.now().plusDays(3), "aaa", "123대로", "a빌딩", orderProducts, 10000);
         List<OrderResponse> orderResponses = Collections.singletonList(orderResponse);
 
         given(orderService.getAllOrders("aaa"))
@@ -56,7 +56,7 @@ class OrderControllerUnitTest {
     void getOrder() throws Exception {
         OrderedProductDto orderedProductDto = new OrderedProductDto(1, 3, 2000);
         List<OrderedProductDto> orderProducts = Collections.singletonList(orderedProductDto);
-        OrderResponse orderResponse = new OrderResponse(100, LocalDateTime.now(), LocalDateTime.now().plusDays(3), "aaa", "123대로", "a빌딩", orderProducts);
+        OrderResponse orderResponse = new OrderResponse(100, LocalDateTime.now(), LocalDateTime.now().plusDays(3), "aaa", "123대로", "a빌딩", orderProducts, 10000);
 
         given(orderService.getOrder(100))
                 .willReturn(orderResponse);

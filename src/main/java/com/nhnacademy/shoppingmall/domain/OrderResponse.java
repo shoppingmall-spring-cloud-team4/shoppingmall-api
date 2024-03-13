@@ -16,4 +16,5 @@ public class OrderResponse {
     private String zipcode;
     private String addressDetail;
     private List<OrderedProductDto> orderedProducts;
+    private Integer totalPayment;
 }

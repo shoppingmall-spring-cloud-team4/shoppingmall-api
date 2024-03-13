@@ -38,12 +38,15 @@ public class OrderServiceImpl implements OrderService {
             List<OrderDetail> orderDetails = orderDetailsRepository.findAllByOrder_OrderId(order.getOrderId());
             List<OrderedProductDto> orderedProducts = new ArrayList<>();
 
+            Integer totalPayment = 0;
+
             for (OrderDetail orderDetail : orderDetails) {
                 OrderedProductDto orderProductDto = new OrderedProductDto(orderDetail.getProduct().getProductId(), orderDetail.getQuantity(), orderDetail.getUnitCost());
                 orderedProducts.add(orderProductDto);
+                totalPayment += orderDetail.getTotalCost();
             }
 
-            OrderResponse orderResponse = new OrderResponse(order.getOrderId(), order.getOrderDate(), order.getShipDate(), userId, order.getAddress().getZipcode(), order.getAddress().getAddressDetail(), orderedProducts);
+            OrderResponse orderResponse = new OrderResponse(order.getOrderId(), order.getOrderDate(), order.getShipDate(), userId, order.getAddress().getZipcode(), order.getAddress().getAddressDetail(), orderedProducts, totalPayment);
             orderResponses.add(orderResponse);
         }
 
@@ -58,14 +61,16 @@ public class OrderServiceImpl implements OrderService {
         List<OrderDetail> orderDetails = orderDetailsRepository.findAllByOrder_OrderId(orderId);
         List<OrderedProductDto> orderedProducts= new ArrayList<>();
 
+        Integer totalPayment = 0;
         for (OrderDetail orderDetail : orderDetails) {
             OrderedProductDto orderedProductDto = new OrderedProductDto(orderDetail.getProduct().getProductId(), orderDetail.getQuantity(), orderDetail.getUnitCost());
             orderedProducts.add(orderedProductDto);
+            totalPayment += orderDetail.getTotalCost();
         }
 
         return new OrderResponse(order.getOrderId(), order.getOrderDate(), order.getShipDate(),
                 order.getUser().getUserId(), order.getAddress().getZipcode(),
-                order.getAddress().getAddressDetail(), orderedProducts);
+                order.getAddress().getAddressDetail(), orderedProducts, totalPayment);
     }
 
     @Override
