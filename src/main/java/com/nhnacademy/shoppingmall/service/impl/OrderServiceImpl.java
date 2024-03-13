@@ -43,10 +43,10 @@ public class OrderServiceImpl implements OrderService {
             for (OrderDetail orderDetail : orderDetails) {
                 OrderedProductDto orderProductDto = new OrderedProductDto(orderDetail.getProduct().getProductId(), orderDetail.getQuantity(), orderDetail.getUnitCost());
                 orderedProducts.add(orderProductDto);
-                totalPayment += orderDetail.getTotalCost();
+                totalPayment += orderDetail.getQuantity() * orderDetail.getUnitCost();
             }
 
-            OrderResponse orderResponse = new OrderResponse(order.getOrderId(), order.getOrderDate(), order.getShipDate(), userId, order.getAddress().getZipcode(), order.getAddress().getAddressDetail(), orderedProducts, totalPayment);
+            OrderResponse orderResponse = new OrderResponse(order.getOrderId(), order.getOrderDate(), order.getShipDate(), userId, order.getAddress().getZipcode(), order.getAddress().getAddressDetail(), orderedProducts, order.getTotalPayment());
             orderResponses.add(orderResponse);
         }
 
@@ -65,12 +65,12 @@ public class OrderServiceImpl implements OrderService {
         for (OrderDetail orderDetail : orderDetails) {
             OrderedProductDto orderedProductDto = new OrderedProductDto(orderDetail.getProduct().getProductId(), orderDetail.getQuantity(), orderDetail.getUnitCost());
             orderedProducts.add(orderedProductDto);
-            totalPayment += orderDetail.getTotalCost();
+            totalPayment += orderDetail.getQuantity() * orderDetail.getUnitCost();
         }
 
         return new OrderResponse(order.getOrderId(), order.getOrderDate(), order.getShipDate(),
                 order.getUser().getUserId(), order.getAddress().getZipcode(),
-                order.getAddress().getAddressDetail(), orderedProducts, totalPayment);
+                order.getAddress().getAddressDetail(), orderedProducts, order.getTotalPayment());
     }
 
     @Override
@@ -93,7 +93,7 @@ public class OrderServiceImpl implements OrderService {
         List<OrderDetail> orderDetails = new ArrayList<>();
         orderRepository.save(order);
 
-        Integer totalCost = 0;
+        Integer totalPayment = 0;
 
         for (OrderedProductDto productDto : orderRequest.getOrderProducts()) {
             Product product = productRepository.findById(productDto.getProductId())
@@ -105,24 +105,25 @@ public class OrderServiceImpl implements OrderService {
                     .product(product)
                     .unitCost(productDto.getUnitCost())
                     .quantity(productDto.getQuantity())
-                    .totalCost(productDto.getUnitCost() * productDto.getQuantity())
                     .pk(pk)
                     .build();
 
-            totalCost += orderDetail.getTotalCost();
+            totalPayment += productDto.getUnitCost() * productDto.getQuantity();
 
             orderDetails.add(orderDetail);
         }
 
-        log.debug("총 주문 금액 : " + totalCost);
 
         Integer userPoint = user.getUserPoint();
-        if(totalCost > userPoint){
+        if(totalPayment > userPoint){
             throw new UserPointNotEnoughException(userPoint);
         }
 
-        user.updatePoint(totalCost);
-        log.debug(">>>> 남은 포인트 : " + user.getUserPoint());
+        order.updateTotalCost(totalPayment);
+        log.debug("총 주문 금액 : " + totalPayment);
+
+        user.updatePoint(totalPayment);
+        log.debug("남은 포인트 : " + user.getUserPoint());
 
         orderDetailsRepository.saveAll(orderDetails);
     }

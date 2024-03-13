@@ -22,7 +22,7 @@ Content-Type: application/json
     },
     {
       "productId": 2,
-      "quantity": 5,
+      "quantity": 10,
       "unitCost": 1000
     }
   ]
@@ -30,4 +30,4 @@ Content-Type: application/json
 
 
 ### 특정 주문 삭제
-DELETE localhost:8200/api/shop/order/9
+DELETE localhost:8200/api/shop/order/2
