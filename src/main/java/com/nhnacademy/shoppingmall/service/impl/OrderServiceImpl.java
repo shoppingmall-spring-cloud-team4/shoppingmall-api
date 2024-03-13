@@ -38,12 +38,10 @@ public class OrderServiceImpl implements OrderService {
             List<OrderDetail> orderDetails = orderDetailsRepository.findAllByOrder_OrderId(order.getOrderId());
             List<OrderedProductDto> orderedProducts = new ArrayList<>();
 
-            Integer totalPayment = 0;
 
             for (OrderDetail orderDetail : orderDetails) {
                 OrderedProductDto orderProductDto = new OrderedProductDto(orderDetail.getProduct().getProductId(), orderDetail.getQuantity(), orderDetail.getUnitCost());
                 orderedProducts.add(orderProductDto);
-                totalPayment += orderDetail.getQuantity() * orderDetail.getUnitCost();
             }
 
             OrderResponse orderResponse = new OrderResponse(order.getOrderId(), order.getOrderDate(), order.getShipDate(), userId, order.getAddress().getZipcode(), order.getAddress().getAddressDetail(), orderedProducts, order.getTotalPayment());
@@ -61,11 +59,9 @@ public class OrderServiceImpl implements OrderService {
         List<OrderDetail> orderDetails = orderDetailsRepository.findAllByOrder_OrderId(orderId);
         List<OrderedProductDto> orderedProducts= new ArrayList<>();
 
-        Integer totalPayment = 0;
         for (OrderDetail orderDetail : orderDetails) {
             OrderedProductDto orderedProductDto = new OrderedProductDto(orderDetail.getProduct().getProductId(), orderDetail.getQuantity(), orderDetail.getUnitCost());
             orderedProducts.add(orderedProductDto);
-            totalPayment += orderDetail.getQuantity() * orderDetail.getUnitCost();
         }
 
         return new OrderResponse(order.getOrderId(), order.getOrderDate(), order.getShipDate(),
@@ -93,7 +89,6 @@ public class OrderServiceImpl implements OrderService {
         List<OrderDetail> orderDetails = new ArrayList<>();
         orderRepository.save(order);
 
-        Integer totalPayment = 0;
 
         for (OrderedProductDto productDto : orderRequest.getOrderProducts()) {
             Product product = productRepository.findById(productDto.getProductId())
@@ -108,13 +103,12 @@ public class OrderServiceImpl implements OrderService {
                     .pk(pk)
                     .build();
 
-            totalPayment += productDto.getUnitCost() * productDto.getQuantity();
-
             orderDetails.add(orderDetail);
         }
 
 
         Integer userPoint = user.getUserPoint();
+        Integer totalPayment = order.getTotalPayment();
         if(totalPayment > userPoint){
             throw new UserPointNotEnoughException(userPoint);
         }
