@@ -6,6 +6,7 @@ import com.nhnacademy.shoppingmall.domain.ReviewUpdateDto;
 import com.nhnacademy.shoppingmall.entity.Product;
 import com.nhnacademy.shoppingmall.entity.Review;
 import com.nhnacademy.shoppingmall.entity.User;
+import com.nhnacademy.shoppingmall.exception.AlreadyExistReviewException;
 import com.nhnacademy.shoppingmall.exception.ProductNotFoundException;
 import com.nhnacademy.shoppingmall.exception.ReviewNotFoundException;
 import com.nhnacademy.shoppingmall.exception.UserNotFoundException;
@@ -15,10 +16,13 @@ import com.nhnacademy.shoppingmall.repository.UserRepository;
 import com.nhnacademy.shoppingmall.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -34,20 +38,31 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    public Page<ReviewDto> getPagesByProductId(Integer productId, Pageable pageable) {
+        return reviewRepository.getPagesByProduct_ProductId(productId, pageable);
+    }
+
+    @Override
     public List<ReviewDto> getReviewsByUserId(String userId) {
         return reviewRepository.getAllByUser_UserId(userId);
     }
 
     @Override
+    public Page<ReviewDto> getPagesByUserId(String userId, Pageable pageable) {
+        return reviewRepository.getPagesByUser_UserId(userId, pageable);
+    }
+
+    @Override
     public void createReview(ReviewRegisterDto reviewRegisterDto, Integer productId) {
-        User user = userRepository.findById(reviewRegisterDto.getUserId()).orElse(null);
-        Product product = productRepository.findById(productId).orElse(null);
+        String userId = reviewRegisterDto.getUserId();
 
-        if(user == null)
-            throw new UserNotFoundException(reviewRegisterDto.getUserId());
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(userId));
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new ProductNotFoundException(productId));
 
-        if(product == null)
-            throw new ProductNotFoundException(productId);
+        if(Objects.nonNull(reviewRepository.getByUser_UserIdAndProduct_ProductId(userId, productId)))
+            throw new AlreadyExistReviewException(userId);
 
         Review review = Review.builder()
                 .reviewDateCreated(LocalDateTime.now())
