@@ -33,4 +33,4 @@ Content-Type: application/json
 
 
 ### 특정 주소 삭제
-DELETE localhost:8200/api/shop/address/5
+DELETE localhost:8200/api/shop/address/1

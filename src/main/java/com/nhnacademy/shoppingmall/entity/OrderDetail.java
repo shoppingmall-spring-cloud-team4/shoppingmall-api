@@ -29,9 +29,6 @@ public class OrderDetail {
     @Column(name = "unit_cost")
     private Integer unitCost; //가격
 
-//    @Column(name = "total_cost")
-//    private Integer totalCost; //총 금액
-
     @Embeddable
     @EqualsAndHashCode
     @NoArgsConstructor

@@ -18,7 +18,7 @@ Content-Type: application/json
     {
       "productId": 1,
       "quantity": 2,
-      "unitCost": 2000
+      "unitCost": 5000
     },
     {
       "productId": 2,
