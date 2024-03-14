@@ -8,12 +8,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,35 +22,21 @@ import java.util.Optional;
 public class ProductController {
     private final ProductService productService;
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<ProductDto>> getAllProductsPage(@PageableDefault(size = 5) Pageable pageable) {
         return ResponseEntity.ok().body(productService.getAllProductsPage(pageable).getContent());
     }
 
     @GetMapping("/{productId}")
-    public ResponseEntity<Optional<ProductDto>> getProduct(@PathVariable("productId") Integer productId, HttpServletResponse response)
-    {
-        Cookie cookie = new Cookie("recentProduct", productId.toString());
-        cookie.setMaxAge(60 * 60 * 24 * 3);
-        response.addCookie(cookie);
-
+    public ResponseEntity<Optional<ProductDto>> getProduct(@PathVariable("productId") Integer productId, HttpServletResponse response, HttpServletRequest request) throws IOException {
+        productService.saveRecentProductToCookie(productId, response, request);
         return ResponseEntity.ok().body(productService.getProductById(productId));
     }
 
-    @RequestMapping("/recentlyViewed")
-    public String recentlyViewedPage(@CookieValue("recentProduct") List<String> recentProduct, Model model) {
-        List<ProductDto> productDtoList = new ArrayList<>();
-
-        for(String productId : recentProduct)
-        {
-            ProductDto productById = productService.getProductById(Integer.parseInt(productId)).orElse(null);
-            if(productById != null)
-            {
-                productDtoList.add(productById);
-            }
-
-        }
-        model.addAttribute("recentProduct", productDtoList);
+    @GetMapping("/recentProducts")
+    public ResponseEntity<List<ProductDto>> recentlyViewedPage(HttpServletRequest request) throws IOException {
+        List<ProductDto> productDtoList = productService.getRecentProductsFromCookie(request);
+        return ResponseEntity.ok().body(productDtoList);
     }
 
     @PostMapping

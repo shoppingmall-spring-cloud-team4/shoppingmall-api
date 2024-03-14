@@ -32,15 +32,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public void createShoppingCart(ShoppingCartRegisterDto shoppingCartRegisterDto) {
-        User user = userRepository.findById(shoppingCartRegisterDto.getUserId()).orElse(null);
+        String userId = shoppingCartRegisterDto.getUserId();
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
 
-        if(user == null)
-            throw new UserNotFoundException(shoppingCartRegisterDto.getUserId());
-
-        Product product = productRepository.findById(shoppingCartRegisterDto.getProductId()).orElse(null);
-
-        if(product == null)
-            throw new ProductNotFoundException(shoppingCartRegisterDto.getProductId());
+        Integer productId = shoppingCartRegisterDto.getProductId();
+        Product product = productRepository.findById(productId).orElseThrow(() -> new ProductNotFoundException(productId));
 
         ShoppingCart shoppingCart = ShoppingCart.builder()
                         .dateCreated(LocalDateTime.now())

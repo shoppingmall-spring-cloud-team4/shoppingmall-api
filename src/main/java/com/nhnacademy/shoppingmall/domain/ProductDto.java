@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class ProductDto {
+    private Integer productId;
     private String productImage;
     private String description;
     private String modelName;
