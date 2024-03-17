@@ -5,11 +5,15 @@ import com.nhnacademy.shoppingmall.domain.UserRegisterDto;
 import com.nhnacademy.shoppingmall.entity.Point;
 import com.nhnacademy.shoppingmall.entity.User;
 import com.nhnacademy.shoppingmall.repository.PointRepository;
+import com.nhnacademy.shoppingmall.exception.UserAlreadyExistException;
+import com.nhnacademy.shoppingmall.exception.UserNotFoundException;
 import com.nhnacademy.shoppingmall.repository.UserRepository;
 import com.nhnacademy.shoppingmall.service.PointService;
 import com.nhnacademy.shoppingmall.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -28,19 +32,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Page<UserDto> getPagingUsers(Pageable pageable) {
+        return userRepository.getPagesBy(pageable);
+    }
+
+    @Override
     public Optional<UserDto> getUserById(String userId) {
         return userRepository.getByUserId(userId);
     }
 
     @Override
     public void createUser(UserRegisterDto userRegisterDto) {
+        String userId = userRegisterDto.getUserId();
+
+        if(userRepository.existsById(userId))
+            throw new UserAlreadyExistException(userId);
+
         User user = User.builder()
-                .userId(userRegisterDto.getUserId())
+                .userId(userId)
                 .userName(userRegisterDto.getUserName())
                 .userPassword(userRegisterDto.getUserPassword())
                 .userBirth(userRegisterDto.getUserBirth())
                 .createdAt(LocalDateTime.now())
-                .userAuth("user")
+                .userPoint(1000000)
+                .userAuth("ROLE_USER")
                 .build();
 
         userRepository.save(user);
@@ -57,10 +72,13 @@ public class UserServiceImpl implements UserService {
                     .userPassword(userRegisterDto.getUserPassword())
                     .userBirth(userRegisterDto.getUserBirth())
                     .createdAt(existedUser.getCreatedAt())
+                    .userPoint(existedUser.getUserPoint())
                     .userAuth(existedUser.getUserAuth())
                     .build();
 
             userRepository.save(user);
+        } else {
+            throw new UserNotFoundException(userId);
         }
     }
 

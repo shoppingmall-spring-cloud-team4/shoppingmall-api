@@ -30,7 +30,7 @@ public class Review {
     @JoinColumn(name = "user_id")
     private User user; // 구매자 아이디
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "product_id")
     private Product product; // 구매 상품번호
 

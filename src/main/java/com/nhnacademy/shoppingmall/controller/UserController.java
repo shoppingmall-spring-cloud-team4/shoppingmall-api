@@ -4,7 +4,6 @@ package com.nhnacademy.shoppingmall.controller;
 import com.nhnacademy.shoppingmall.domain.ReviewDto;
 import com.nhnacademy.shoppingmall.domain.UserDto;
 import com.nhnacademy.shoppingmall.domain.UserRegisterDto;
-import com.nhnacademy.shoppingmall.service.PointService;
 import com.nhnacademy.shoppingmall.service.ReviewService;
 import com.nhnacademy.shoppingmall.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -24,21 +23,15 @@ public class UserController {
     private final PointService pointService;
 
     @GetMapping
-    public ResponseEntity<List<UserDto>> getAllUsers()
+    public ResponseEntity<List<UserDto>> getAllPagingUsers(Pageable pageable)
     {
-        return ResponseEntity.ok().body(userService.getUsers());
+        return ResponseEntity.ok().body(userService.getPagingUsers(pageable).getContent());
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<Optional<UserDto>> getUser(@PathVariable("userId") String userId)
+    @GetMapping("/myPage")
+    public ResponseEntity<Optional<UserDto>> getUser(@RequestHeader("X-USER-ID") String userId)
     {
         return ResponseEntity.ok().body(userService.getUserById(userId));
-    }
-
-    // User가 작성한 reviews
-    @GetMapping("/{userId}/review")
-    public ResponseEntity<List<ReviewDto>> getReviewsByUserId(@PathVariable String userId) {
-        return ResponseEntity.ok().body(reviewService.getReviewsByUserId(userId));
     }
 
     @PostMapping
@@ -47,14 +40,14 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PutMapping("/{userId}")
-    public ResponseEntity<Void> updateUser(@RequestBody UserRegisterDto userRegisterDto, @PathVariable("userId") String userId) {
+    @PutMapping
+    public ResponseEntity<Void> updateUser(@RequestBody UserRegisterDto userRegisterDto, @RequestHeader("X-USER-ID") String userId) {
         userService.updateUser(userRegisterDto, userId);
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<Void> deleteUser(@PathVariable("userId") String userId) {
+    @DeleteMapping
+    public ResponseEntity<Void> deleteUser(@RequestHeader("X-USER-ID") String userId) {
         userService.deleteUser(userId);
         return ResponseEntity.ok().build();
     }

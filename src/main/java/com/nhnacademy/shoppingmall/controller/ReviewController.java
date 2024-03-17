@@ -5,6 +5,8 @@ import com.nhnacademy.shoppingmall.domain.ReviewRegisterDto;
 import com.nhnacademy.shoppingmall.domain.ReviewUpdateDto;
 import com.nhnacademy.shoppingmall.service.ReviewService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,12 +20,16 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @GetMapping
-    public ResponseEntity<List<ReviewDto>> getReviewsByProductId(@PathVariable Integer productId) {
-        return ResponseEntity.ok().body(reviewService.getReviewsByProductId(productId));
+    public ResponseEntity<List<ReviewDto>> getReviewsByProductId(@PathVariable Integer productId, @PageableDefault(size = 5) Pageable pageable) {
+        return ResponseEntity.ok().body(reviewService.getPagesByProductId(productId, pageable).getContent());
     }
 
 
-    // userId는 Gateway에서 session으로 받아서 처리하면 좋을듯
+    // User가 작성한 reviews
+    @GetMapping("/my_review")
+    public ResponseEntity<List<ReviewDto>> getReviewsByUserId(@RequestHeader("X-USER-ID") String userId, @PageableDefault(size = 5) Pageable pageable) {
+        return ResponseEntity.ok().body(reviewService.getPagesByUserId(userId, pageable).getContent());
+    }
     @PostMapping
     public ResponseEntity<Void> createReview(@RequestBody ReviewRegisterDto reviewRegisterDto, @PathVariable("productId") Integer productId) {
         reviewService.createReview(reviewRegisterDto, productId);

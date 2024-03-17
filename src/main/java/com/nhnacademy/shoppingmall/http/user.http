@@ -1,21 +1,17 @@
 # 전부 정상작동함 ㅎ
 
-GET http://localhost:8200/api/user
+GET localhost:8200/api/user?page=1&size=2
 Accept: application/json
 
 ###
 
-GET http://localhost:8200/api/user/jjunho50
+GET localhost:8200/api/user/myPage
+X-USER-ID: jjunho50
 Accept: application/json
 
 ###
 
-GET http://localhost:8200/api/user/jjunho50/review
-Accept: application/json
-
-###
-
-POST http://localhost:8200/api/user
+POST localhost:8200/api/user
 Content-Type: application/json
 
 {
@@ -27,7 +23,8 @@ Content-Type: application/json
 
 
 ###
-PUT http://localhost:8200/api/user/jjunho50
+PUT http://localhost:8200/api/user
+X-USER-ID: jjunho50
 Content-Type: application/json
 
 {
@@ -39,4 +36,5 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:8200/api/user/jjunho50
+DELETE http://localhost:8200/api/user
+X-USER-ID: jjunho50

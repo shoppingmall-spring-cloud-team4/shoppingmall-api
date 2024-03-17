@@ -4,6 +4,8 @@ import com.nhnacademy.shoppingmall.domain.ProductDto;
 import com.nhnacademy.shoppingmall.domain.ProductRegisterDto;
 import com.nhnacademy.shoppingmall.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +20,8 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping()
-    public ResponseEntity<List<ProductDto>> getProducts() {
-        return ResponseEntity.ok().body(productService.getProducts());
+    public ResponseEntity<List<ProductDto>> getAllProductsPage(@PageableDefault(size = 5) Pageable pageable) {
+        return ResponseEntity.ok().body(productService.getAllProductsPage(pageable).getContent());
     }
 
     @GetMapping("/{productId}")
