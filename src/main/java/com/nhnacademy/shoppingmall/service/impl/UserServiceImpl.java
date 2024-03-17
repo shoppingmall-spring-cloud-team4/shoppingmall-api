@@ -2,11 +2,15 @@ package com.nhnacademy.shoppingmall.service.impl;
 
 import com.nhnacademy.shoppingmall.domain.UserDto;
 import com.nhnacademy.shoppingmall.domain.UserRegisterDto;
+import com.nhnacademy.shoppingmall.entity.Point;
 import com.nhnacademy.shoppingmall.entity.User;
+import com.nhnacademy.shoppingmall.repository.PointRepository;
 import com.nhnacademy.shoppingmall.exception.UserAlreadyExistException;
 import com.nhnacademy.shoppingmall.exception.UserNotFoundException;
 import com.nhnacademy.shoppingmall.repository.UserRepository;
+import com.nhnacademy.shoppingmall.service.PointService;
 import com.nhnacademy.shoppingmall.service.UserService;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -50,7 +54,6 @@ public class UserServiceImpl implements UserService {
                 .userPassword(userRegisterDto.getUserPassword())
                 .userBirth(userRegisterDto.getUserBirth())
                 .createdAt(LocalDateTime.now())
-                .userPoint(1000000)
                 .userAuth("ROLE_USER")
                 .build();
 
@@ -68,7 +71,6 @@ public class UserServiceImpl implements UserService {
                     .userPassword(userRegisterDto.getUserPassword())
                     .userBirth(userRegisterDto.getUserBirth())
                     .createdAt(existedUser.getCreatedAt())
-                    .userPoint(existedUser.getUserPoint())
                     .userAuth(existedUser.getUserAuth())
                     .build();
 

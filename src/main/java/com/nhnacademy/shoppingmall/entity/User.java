@@ -32,9 +32,6 @@ public class User {
     @Length(max = 10)
     private String userAuth; // 권한
 
-    @Column(name = "user_point")
-    private Integer userPoint; // 포인트
-
     @Column(name = "created_at")
     private LocalDateTime createdAt; // 회원가입일자
 
@@ -42,19 +39,14 @@ public class User {
     private LocalDateTime latestLoginAt; // 마지막 접속일
 
     @Builder
-    public User(String userId, String userName, String userPassword, String userBirth, String userAuth,
-            Integer userPoint, LocalDateTime createdAt, LocalDateTime latestLoginAt) {
+    public User(String userId, String userName, String userPassword, String userBirth, String userAuth, LocalDateTime createdAt, LocalDateTime latestLoginAt) {
         this.userId = userId;
         this.userName = userName;
         this.userPassword = userPassword;
         this.userBirth = userBirth;
         this.userAuth = userAuth;
-        this.userPoint = userPoint;
         this.createdAt = createdAt;
         this.latestLoginAt = latestLoginAt;
     }
 
-    public void updatePoint(Integer totalCost){
-        this.userPoint -= totalCost;
-    }
 }
