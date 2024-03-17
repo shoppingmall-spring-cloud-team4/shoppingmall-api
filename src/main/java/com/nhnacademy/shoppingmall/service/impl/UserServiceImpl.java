@@ -6,6 +6,7 @@ import com.nhnacademy.shoppingmall.entity.Point;
 import com.nhnacademy.shoppingmall.entity.User;
 import com.nhnacademy.shoppingmall.repository.PointRepository;
 import com.nhnacademy.shoppingmall.repository.UserRepository;
+import com.nhnacademy.shoppingmall.service.PointService;
 import com.nhnacademy.shoppingmall.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,6 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final PointRepository pointRepository;
 
     @Override
     public List<UserDto> getUsers() {
@@ -44,15 +44,6 @@ public class UserServiceImpl implements UserService {
                 .build();
 
         userRepository.save(user);
-
-        Point point = Point.builder()
-                .user(user)
-                .points(1000000)
-                .pointHistory("회원가입")
-                .build();
-
-        pointRepository.save(point);
-
     }
 
     @Override

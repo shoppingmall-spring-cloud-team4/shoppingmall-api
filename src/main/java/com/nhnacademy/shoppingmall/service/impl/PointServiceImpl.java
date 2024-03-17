@@ -2,14 +2,20 @@ package com.nhnacademy.shoppingmall.service.impl;
 
 import com.nhnacademy.shoppingmall.domain.PointRegisterRequest;
 import com.nhnacademy.shoppingmall.entity.Point;
+import com.nhnacademy.shoppingmall.entity.PointHistory;
 import com.nhnacademy.shoppingmall.entity.User;
+import com.nhnacademy.shoppingmall.exception.DuplicateUserIdException;
 import com.nhnacademy.shoppingmall.exception.UserPointNotEnoughException;
+import com.nhnacademy.shoppingmall.repository.PointHistoryRepository;
 import com.nhnacademy.shoppingmall.repository.PointRepository;
+import com.nhnacademy.shoppingmall.repository.UserRepository;
 import com.nhnacademy.shoppingmall.service.PointService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+
+import java.net.Socket;
 
 @Service
 @Slf4j
@@ -17,60 +23,56 @@ import org.springframework.stereotype.Service;
 public class PointServiceImpl implements PointService {
 
     private final PointRepository pointRepository;
+    private final PointHistoryRepository pointHistoryRepository;
+    private final UserRepository userRepository;
 
     @Override
-    public Point getAllPointHistory(String userId) {
-        return pointRepository.findByUser_UserId(userId).orElse(null);
+    public Point getPoint(String userId) {
+        User user = userRepository.getReferenceById(userId);
+
+        return pointRepository.findByUser(user);
     }
 
     @Override
-    public Point getPoint(String userId){
-        return pointRepository.findFirstByUser_UserIdOrderByCreatedAtDesc(userId);
-    }
-
-    @Override
-    public void createPoints(String userId, PointRegisterRequest pointRegisterRequest) {
-        Point point = Point.builder()
-                .points(pointRegisterRequest.getPoints())
-                .pointHistory(pointRegisterRequest.getPointHistory())
-                .user(User.builder()
-                        .userId(userId)
-                        .build())
-                .build();
-
-        pointRepository.save(point);
-    }
-
-    @Async
-    @Override
-    public void earnPoints(Point point) {
-//        Point point = pointRepository.findFirstByUser_UserIdOrderByCreatedAtDesc(userId);
-//        point = Point.builder()
-//                .points(point.getPoints() + pointRegisterRequest.getPoints())
-//                .pointHistory(pointRegisterRequest.getPointHistory())
-//                .user(point.getUser())
-//                .build();
-//        p
-
-        pointRepository.save(point);
-        log.info(">>>>point적립");
-    }
-
-    @Override
-    public void deductPoints(String userId, PointRegisterRequest pointRegisterRequest) {
-        Point point = pointRepository.findFirstByUser_UserIdOrderByCreatedAtDesc(userId);
-        if (point.getPoints() < pointRegisterRequest.getPoints()) {
-            throw new UserPointNotEnoughException(point.getPoints());
+    public void createPoints(String userId) {
+        if(userRepository.findById(userId).isPresent()){
+            throw new DuplicateUserIdException(userId);
         }
 
-        point = Point.builder()
-                .points(point.getPoints() - pointRegisterRequest.getPoints())
-                .pointHistory(pointRegisterRequest.getPointHistory())
-                .user(point.getUser())
-                .build();
+        Point point = Point.builder()
+                           .userId(userId)
+                           .point(100000)
+                           .build();
         pointRepository.save(point);
-        log.info(">>>>point차감");
+
+        PointHistory pointHistory = PointHistory.builder()
+                                                .pointHistory("회원가입")
+                                                .point(point)
+                                                .build();
+        pointHistoryRepository.save(pointHistory);
     }
 
+    @Override
+    public void updatePoints(String userId, PointRegisterRequest pointRegisterRequest) {
+        User user = userRepository.getReferenceById(userId);
+        Point point = pointRepository.findByUser(user);
 
+        point = Point.builder()
+                     .userId(userId)
+                     .point(point.getPoint() + pointRegisterRequest.getPoints())
+                     .build();
+
+        Integer currentPoint = point.getPoint();
+        if(currentPoint < 0){
+            throw new UserPointNotEnoughException(currentPoint);
+        }
+        pointRepository.saveAndFlush(point);
+
+        PointHistory pointHistory = PointHistory.builder()
+                                                .pointHistory(pointRegisterRequest.getPointHistory())
+                                                .point(point)
+                                                .build();
+        pointHistoryRepository.saveAndFlush(pointHistory);
+        log.info(">>>>point적립");
+    }
 }

@@ -4,6 +4,7 @@ package com.nhnacademy.shoppingmall.controller;
 import com.nhnacademy.shoppingmall.domain.ReviewDto;
 import com.nhnacademy.shoppingmall.domain.UserDto;
 import com.nhnacademy.shoppingmall.domain.UserRegisterDto;
+import com.nhnacademy.shoppingmall.service.PointService;
 import com.nhnacademy.shoppingmall.service.ReviewService;
 import com.nhnacademy.shoppingmall.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ import java.util.Optional;
 public class UserController {
     private final UserService userService;
     private final ReviewService reviewService;
+    private final PointService pointService;
 
     @GetMapping
     public ResponseEntity<List<UserDto>> getAllUsers()

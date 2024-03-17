@@ -1,0 +1,27 @@
+### 유저 포인트 조회
+GET localhost:8200/api/shop/points
+X-USER-ID: aaa
+
+### 포인트 생성
+POST localhost:8200/api/shop/points/create
+X-USER-ID: aaa
+
+### 포인트 적립
+POST localhost:8200/api/shop/points/update
+X-USER-ID: aaa
+Content-Type: application/json
+
+{
+  "points": 10000,
+  "pointHistory": "적립 테스트"
+}
+
+### 포인트 차감
+POST localhost:8200/api/shop/points/update
+X-USER-ID: aaa
+Content-Type: application/json
+
+{
+  "points": -5000,
+  "pointHistory": "차감 테스트"
+}

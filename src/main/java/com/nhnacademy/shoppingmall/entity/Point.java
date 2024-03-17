@@ -12,29 +12,20 @@ import java.time.LocalDateTime;
 @Table(name = "Points")
 public class Point {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "point_id")
-    private Integer pointId;
+    @Column(name = "user_id") // 외래키
+    private String userId;
 
-    private Integer points; // 포인트
-
-    @Column(name = "point_history")
-    @Length(max = 100)
-    private String pointHistory; // 포인트 내역
-
-    @Column(name = "created_at")
-    private LocalDateTime createdAt; // 생성일
-
+    @MapsId("userId")
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column(name = "point")
+    private Integer point;
 
     @Builder
-    public Point(Integer points, String pointHistory, User user) {
-        this.points = points;
-        this.pointHistory = pointHistory;
-        this.user = user;
-        this.createdAt = LocalDateTime.now();
+    public Point(Integer point, String userId) {
+        this.point = point;
+        this.userId = userId;
     }
 }
