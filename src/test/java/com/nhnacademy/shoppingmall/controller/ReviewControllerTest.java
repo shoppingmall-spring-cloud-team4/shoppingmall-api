@@ -1,9 +1,7 @@
 package com.nhnacademy.shoppingmall.controller;
 
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.time.LocalDateTime;
@@ -18,6 +16,10 @@ import com.nhnacademy.shoppingmall.service.ReviewService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,23 +40,45 @@ class ReviewControllerTest {
     @Test
     void getReviewsByProductId() throws Exception {
         Integer productId = 1;
-        List<ReviewDto> reviewList = Arrays.asList(
-                new ReviewDto(5, LocalDateTime.now(), "Great item!", "user1"),
-                new ReviewDto(4, LocalDateTime.now(), "Nice item!", "user2")
+        int page = 0;
+        int size = 5;
+        Pageable pageable = PageRequest.of(page, size);
+        List<ReviewDto> expectedReviews = Arrays.asList(
+                new ReviewDto(5, LocalDateTime.now(), "comment1", "userId1"),
+                new ReviewDto(5, LocalDateTime.now(), "comment2", "userId1")
         );
-        given(reviewService.getReviewsByProductId(productId)).willReturn(reviewList);
+        Page<ReviewDto> reviewDtoPage = new PageImpl<>(expectedReviews, pageable, expectedReviews.size());
 
-        mockMvc.perform(get("/api/product/" + productId + "/review")
-                        .contentType(MediaType.APPLICATION_JSON))
+        when(reviewService.getPagesByProductId(productId, pageable)).thenReturn(reviewDtoPage);
+
+        mockMvc.perform(get("/api/product/" + productId + "/review?page=" + page + "&size=" + size))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].rating", is(reviewList.get(0).getRating())))
-                .andExpect(jsonPath("$[0].comment", is(reviewList.get(0).getComment())))
-                .andExpect(jsonPath("$[0].userId", is(reviewList.get(0).getUserId())))
-                .andExpect(jsonPath("$[1].rating", is(reviewList.get(1).getRating())))
-                .andExpect(jsonPath("$[1].comment", is(reviewList.get(1).getComment())))
-                .andExpect(jsonPath("$[1].userId", is(reviewList.get(1).getUserId())));
+                .andExpect(content().json(objectMapper.writeValueAsString(expectedReviews)));
 
-        verify(reviewService, times(1)).getReviewsByProductId(productId);
+        verify(reviewService, times(1)).getPagesByProductId(productId, pageable);
+    }
+
+    @Test
+    void getReviewsByUserId() throws Exception {
+        Integer productId = 1;
+        String userId = "userId1";
+        int page = 0;
+        int size = 5;
+        Pageable pageable = PageRequest.of(page, size);
+        List<ReviewDto> expectedReviews = Arrays.asList(
+                new ReviewDto(5, LocalDateTime.now(), "comment1", userId),
+                new ReviewDto(5, LocalDateTime.now(), "comment2", userId)
+        );
+        Page<ReviewDto> reviewDtoPage = new PageImpl<>(expectedReviews, pageable, expectedReviews.size());
+
+        when(reviewService.getPagesByUserId(userId, pageable)).thenReturn(reviewDtoPage);
+
+        mockMvc.perform(get("/api/product/" + productId + "/review/my_review?page=" + page + "&size=" + size)
+                        .header("X-USER-ID", userId))
+                .andExpect(status().isOk())
+                .andExpect(content().json(objectMapper.writeValueAsString(expectedReviews)));
+
+        verify(reviewService, times(1)).getPagesByUserId(userId, pageable);
     }
 
     @Test

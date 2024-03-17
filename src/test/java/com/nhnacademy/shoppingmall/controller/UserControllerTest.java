@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhnacademy.shoppingmall.domain.ReviewDto;
 import com.nhnacademy.shoppingmall.domain.UserDto;
 import com.nhnacademy.shoppingmall.domain.UserRegisterDto;
+import com.nhnacademy.shoppingmall.service.PointService;
 import com.nhnacademy.shoppingmall.service.ReviewService;
 import com.nhnacademy.shoppingmall.service.UserService;
 import org.junit.jupiter.api.Test;
@@ -12,20 +13,25 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.header;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(UserController.class)
 class UserControllerTest {
@@ -40,50 +46,41 @@ class UserControllerTest {
     private UserService userService;
 
     @MockBean
-    private ReviewService reviewService;
+    private PointService pointService;
+
 
 
     @Test
     void getAllUsers() throws Exception {
-        List<UserDto> mockUserList = Arrays.asList(new UserDto("id1","User 1"), new UserDto("id2", "User 2"));
-        Mockito.when(userService.getUsers()).thenReturn(mockUserList);
+        // Given
+        int page = 0;
+        int size = 10;
+        Pageable pageable = PageRequest.of(page, size);
+        List<UserDto> expectedUsers = new ArrayList<>(Arrays.asList(new UserDto("User 1", "password"), new UserDto( "User 2", "password2")));
+        Page<UserDto> userDtoPage = new PageImpl<>(expectedUsers, pageable, expectedUsers.size());
 
-        mockMvc.perform(get("/api/user"))
+        when(userService.getPagingUsers(pageable)).thenReturn(userDtoPage);
+
+        mockMvc.perform(get("/api/user?page=" + page + "&size=" + size))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].userId", is("id1")))
-                .andExpect(jsonPath("$[0].userName", is("User 1")))
-                .andExpect(jsonPath("$[1].userId", is("id2")))
-                .andExpect(jsonPath("$[1].userName", is("User 2")));
+                .andExpect(content().json(objectMapper.writeValueAsString(expectedUsers)));
 
-        verify(userService, times(1)).getUsers();
+        verify(userService, times(1)).getPagingUsers(pageable);
     }
 
     @Test
-    void getUser() throws Exception{
-        Optional<UserDto> mockUser = Optional.of(new UserDto("id1", "User 1"));
-        Mockito.when(userService.getUserById(Mockito.anyString())).thenReturn(mockUser);
+    void getUser() throws Exception {
+        String userId = "id1";
+        Optional<UserDto> expectedUser = Optional.of(new UserDto(userId, "password"));
 
-        mockMvc.perform(get("/api/user/{userId}", "id1"))
+        when(userService.getUserById(userId)).thenReturn(expectedUser);
+
+        mockMvc.perform(get("/api/user/myPage")
+                        .header("X-USER-ID", userId))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.userId", is("id1")))
-                .andExpect(jsonPath("$.userName", is("User 1")));
+                .andExpect(content().json(objectMapper.writeValueAsString(expectedUser)));
 
-        verify(userService, times(1)).getUserById(Mockito.anyString());
-    }
-
-    @Test
-    void getReviewsByUserId() throws Exception{
-        List<ReviewDto> mockReviewList = Arrays.asList
-                (new ReviewDto(5, LocalDateTime.now(), "comment", "userId"),
-                        new ReviewDto(4, LocalDateTime.now(), "comment", "userId"));
-        Mockito.when(reviewService.getReviewsByUserId(Mockito.anyString())).thenReturn(mockReviewList);
-
-        mockMvc.perform(get("/api/user/{userId}/review", "id1"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0]", is(notNullValue())))
-                .andExpect(jsonPath("$[1]", is(notNullValue())));
-
-        verify(reviewService, times(1)).getReviewsByUserId(Mockito.anyString());
+        verify(userService, times(1)).getUserById(userId);
     }
 
     @Test
@@ -99,22 +96,30 @@ class UserControllerTest {
     }
 
     @Test
-    void updateUser() throws Exception{
+    void updateUser() throws Exception {
         UserRegisterDto userRegisterDto = new UserRegisterDto("id1", "User 1", "password", "19991102");
 
-        mockMvc.perform(put("/api/user/{userId}", "id1")
+        doNothing().when(userService).updateUser(any(UserRegisterDto.class), eq("id1"));
+
+        mockMvc.perform(put("/api/user")
+                        .header("X-USER-ID", "id1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(userRegisterDto)))
                 .andExpect(status().isOk());
 
-        verify(userService, times(1)).updateUser(Mockito.any(UserRegisterDto.class), Mockito.anyString());
+        verify(userService, times(1)).updateUser(any(UserRegisterDto.class), eq("id1"));
     }
 
     @Test
-    void deleteUser() throws Exception{
-        mockMvc.perform(delete("/api/user/{userId}", "id1"))
-                .andExpect(status().isOk());
+    void deleteUserTest() throws Exception {
+        UserRegisterDto userRegisterDto = new UserRegisterDto("id1", "User 1", "password", "19991102");
+        userService.createUser(userRegisterDto);
 
-        verify(userService, times(1)).deleteUser(Mockito.anyString());
+        String targetUserId = "id1";
+        doNothing().when(userService).deleteUser(anyString());
+        mockMvc.perform(delete("/api/user")
+                        .header("X-USER-ID", targetUserId))
+                .andExpect(status().isOk());
+        verify(userService, times(1)).deleteUser(targetUserId);
     }
 }
