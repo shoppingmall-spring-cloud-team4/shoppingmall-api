@@ -45,31 +45,28 @@ class UserControllerTest {
 
     @Test
     void getAllUsers() throws Exception {
-        List<UserDto> mockUserList = Arrays.asList(new UserDto("id1","User 1", 100), new UserDto("id2", "User 2", 200));
+        List<UserDto> mockUserList = Arrays.asList(new UserDto("id1","User 1"), new UserDto("id2", "User 2"));
         Mockito.when(userService.getUsers()).thenReturn(mockUserList);
 
         mockMvc.perform(get("/api/user"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].userId", is("id1")))
                 .andExpect(jsonPath("$[0].userName", is("User 1")))
-                .andExpect(jsonPath("$[0].userPoint", is(100)))
                 .andExpect(jsonPath("$[1].userId", is("id2")))
-                .andExpect(jsonPath("$[1].userName", is("User 2")))
-                .andExpect(jsonPath("$[1].userPoint", is(200)));
+                .andExpect(jsonPath("$[1].userName", is("User 2")));
 
         verify(userService, times(1)).getUsers();
     }
 
     @Test
     void getUser() throws Exception{
-        Optional<UserDto> mockUser = Optional.of(new UserDto("id1", "User 1", 100));
+        Optional<UserDto> mockUser = Optional.of(new UserDto("id1", "User 1"));
         Mockito.when(userService.getUserById(Mockito.anyString())).thenReturn(mockUser);
 
         mockMvc.perform(get("/api/user/{userId}", "id1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.userId", is("id1")))
-                .andExpect(jsonPath("$.userName", is("User 1")))
-                .andExpect(jsonPath("$.userPoint", is(100)));
+                .andExpect(jsonPath("$.userName", is("User 1")));
 
         verify(userService, times(1)).getUserById(Mockito.anyString());
     }

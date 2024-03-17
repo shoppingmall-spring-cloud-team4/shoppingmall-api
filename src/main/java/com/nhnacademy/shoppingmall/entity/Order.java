@@ -14,6 +14,9 @@ public class Order {
     @Column(name = "order_id")
     private Integer orderId;
 
+    @Column(name = "total_payment")
+    private Integer totalPayment; //총 지불금액
+
     @Column(name = "order_date")
     private LocalDateTime orderDate; //주문 날짜
 
@@ -34,5 +37,9 @@ public class Order {
         this.shipDate = shipDate;
         this.user = user;
         this.address = address;
+    }
+
+    public void updateTotalCost(Integer totalPayment) {
+        this.totalPayment = totalPayment;
     }
 }
