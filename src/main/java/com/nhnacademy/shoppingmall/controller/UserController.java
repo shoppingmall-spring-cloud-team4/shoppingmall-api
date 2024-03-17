@@ -3,6 +3,7 @@ package com.nhnacademy.shoppingmall.controller;
 
 import com.nhnacademy.shoppingmall.domain.UserDto;
 import com.nhnacademy.shoppingmall.domain.UserRegisterDto;
+import com.nhnacademy.shoppingmall.service.PointService;
 import com.nhnacademy.shoppingmall.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final PointService pointService;
 
     @GetMapping
     public ResponseEntity<List<UserDto>> getAllPagingUsers(Pageable pageable) {
@@ -32,6 +34,7 @@ public class UserController {
     @PostMapping
     public ResponseEntity<Void> createUser(@RequestBody UserRegisterDto userRegisterDto) {
         userService.createUser(userRegisterDto);
+        pointService.createPoints(userRegisterDto.getUserId());
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 

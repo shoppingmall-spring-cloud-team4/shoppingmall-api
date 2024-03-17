@@ -15,7 +15,7 @@ POST localhost:8200/api/user
 Content-Type: application/json
 
 {
-  "userId": "mmm",
+  "userId": "sd",
   "userName": "정준호",
   "userPassword": "123",
   "userBirth": "19991102"

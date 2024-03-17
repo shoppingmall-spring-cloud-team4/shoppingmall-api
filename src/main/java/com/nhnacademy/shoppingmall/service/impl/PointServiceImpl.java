@@ -35,7 +35,7 @@ public class PointServiceImpl implements PointService {
 
     @Override
     public void createPoints(String userId) {
-        if(userRepository.findById(userId).isPresent()){
+        if(pointRepository.findById(userId).isPresent()){
             throw new DuplicateUserIdException(userId);
         }
 

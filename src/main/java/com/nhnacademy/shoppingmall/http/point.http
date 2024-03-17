@@ -4,7 +4,7 @@ X-USER-ID: aaa
 
 ### 포인트 생성
 POST localhost:8200/api/shop/points/create
-X-USER-ID: aaa
+X-USER-ID: qqq
 
 ### 포인트 적립
 POST localhost:8200/api/shop/points/update
