@@ -19,7 +19,7 @@ import java.util.Optional;
 public class ProductController {
     private final ProductService productService;
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<ProductDto>> getAllProductsPage(@PageableDefault(size = 5) Pageable pageable) {
         return ResponseEntity.ok().body(productService.getAllProductsPage(pageable).getContent());
     }

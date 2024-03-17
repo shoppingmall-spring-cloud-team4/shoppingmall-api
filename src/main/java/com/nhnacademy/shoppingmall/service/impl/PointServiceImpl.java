@@ -12,10 +12,7 @@ import com.nhnacademy.shoppingmall.repository.UserRepository;
 import com.nhnacademy.shoppingmall.service.PointService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-
-import java.net.Socket;
 
 @Service
 @Slf4j

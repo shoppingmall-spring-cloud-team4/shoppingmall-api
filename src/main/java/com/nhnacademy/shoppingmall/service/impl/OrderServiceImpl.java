@@ -20,6 +20,8 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Service
 @Transactional
@@ -109,9 +111,10 @@ public class OrderServiceImpl implements OrderService {
                                                  .build();
 
             totalPayment += orderDetail.getUnitCost() * orderDetail.getQuantity();
-
             orderDetails.add(orderDetail);
         }
+
+        orderDetailsRepository.saveAll(orderDetails);
 
         order.updateTotalCost(totalPayment);
         log.debug("총 주문 금액 : " + totalPayment);
@@ -122,10 +125,19 @@ public class OrderServiceImpl implements OrderService {
         pointService.updatePoints(user.getUserId(), pointRegisterRequest);
 
         //결제 포인트 10% 적립
+
         Integer orderPoint = (int) (totalPayment * 0.1);
         String pointHistoryMessage = "주문 시 10% 적립 : " + orderPoint;
         PointRegisterRequest orderPointRequest = new PointRegisterRequest(orderPoint, pointHistoryMessage);
-        pointService.updatePoints(user.getUserId(), orderPointRequest);
+
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.submit(() -> {
+            try {
+                pointService.updatePoints(user.getUserId(), orderPointRequest);
+            } catch (Exception e) {
+                log.error("포인트 적립 실패: {}", e.getMessage());
+            }
+        });
 
     }
 
