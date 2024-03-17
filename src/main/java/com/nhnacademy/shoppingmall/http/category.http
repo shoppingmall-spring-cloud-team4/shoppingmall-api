@@ -34,4 +34,4 @@ Content-Type: application/json
 
 
 ### 특정 카테고리 삭제
-DELETE localhost:8200/api/category/2
+DELETE localhost:8200/api/shop/category/2

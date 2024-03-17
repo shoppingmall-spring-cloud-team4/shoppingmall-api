@@ -54,7 +54,6 @@ public class UserServiceImpl implements UserService {
                 .userPassword(userRegisterDto.getUserPassword())
                 .userBirth(userRegisterDto.getUserBirth())
                 .createdAt(LocalDateTime.now())
-                .userPoint(1000000)
                 .userAuth("ROLE_USER")
                 .build();
 
@@ -72,7 +71,6 @@ public class UserServiceImpl implements UserService {
                     .userPassword(userRegisterDto.getUserPassword())
                     .userBirth(userRegisterDto.getUserBirth())
                     .createdAt(existedUser.getCreatedAt())
-                    .userPoint(existedUser.getUserPoint())
                     .userAuth(existedUser.getUserAuth())
                     .build();
 

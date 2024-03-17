@@ -1,5 +1,5 @@
 ### 모든 주소 조회
-GET localhost:8000/api/shop/address
+GET localhost:8200/api/shop/address
 X-USER-ID: aaa
 
 
@@ -21,7 +21,7 @@ Content-Type: application/json
 
 
 ### 특정 주소 수정
-PUT localhost:8200/api/shop/address/5
+PUT localhost:8200/api/shop/address/2
 X-USER-ID: aaa
 Content-Type: application/json
 

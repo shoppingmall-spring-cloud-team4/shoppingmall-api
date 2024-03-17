@@ -1,12 +1,11 @@
 package com.nhnacademy.shoppingmall.controller;
 
 
-import com.nhnacademy.shoppingmall.domain.ReviewDto;
 import com.nhnacademy.shoppingmall.domain.UserDto;
 import com.nhnacademy.shoppingmall.domain.UserRegisterDto;
-import com.nhnacademy.shoppingmall.service.ReviewService;
 import com.nhnacademy.shoppingmall.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,18 +18,14 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-    private final ReviewService reviewService;
-    private final PointService pointService;
 
     @GetMapping
-    public ResponseEntity<List<UserDto>> getAllPagingUsers(Pageable pageable)
-    {
+    public ResponseEntity<List<UserDto>> getAllPagingUsers(Pageable pageable) {
         return ResponseEntity.ok().body(userService.getPagingUsers(pageable).getContent());
     }
 
     @GetMapping("/myPage")
-    public ResponseEntity<Optional<UserDto>> getUser(@RequestHeader("X-USER-ID") String userId)
-    {
+    public ResponseEntity<Optional<UserDto>> getUser(@RequestHeader("X-USER-ID") String userId) {
         return ResponseEntity.ok().body(userService.getUserById(userId));
     }
 
